@@ -1,3 +1,10 @@
+Further implementations are still required for this project
+
+Most of the codes in this repository are starter codes from Professor James Fawcett, Syracuse University(expected to retire May 2019)
+
+
+
+====================================================================================================================
 This project supports only downloading and uploading
 
 No conversion operations supported!
