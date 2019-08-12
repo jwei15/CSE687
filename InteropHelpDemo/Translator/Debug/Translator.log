@@ -1,0 +1,7 @@
+﻿  AssemblyInfo.cpp
+  Translator.cpp
+  Generating Code...
+  .NETFramework,Version=v4.6.1.AssemblyAttributes.cpp
+  AssemblyInfo.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+NativeCpp.lib(NativeCpp.obj) : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/INCREMENTAL:NO' specification
+  Translator.vcxproj -> E:\687\InteropHelpDemo\Debug\Translator.dll

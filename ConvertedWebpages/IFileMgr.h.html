@@ -1,0 +1,64 @@
+<DOCTYPE !HTML></div></div></div>
+<html>
+  <head>
+    <Title>IFileMgr.h</Title>
+    <style>
+      body <input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div><input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div><input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div>{
+        padding:15px 40px;
+        font-family: Consolas;
+        font-size: 1.25em;
+        font-weight: normal;
+      }</div>
+      </style></div></div>
+      <link rel="stylesheet"  href="../foldingformat.css" />
+  </head>
+
+  <body>
+    <pre>
+#pragma once
+<input id = _23 type = "checkbox"><label class = "drop" for = "_23"></label><div>/////////////////////////////////////////////////////////////////////
+// IFileMgr.h - interface for finding files matching specified     //
+//              patterns on a specified path                       //
+// ver 3.0                                                         //
+// Jim Fawcett, MidtermCodeSupplement, Spring 2016                 //
+/////////////////////////////////////////////////////////////////////</div>
+
+#include &lt;string&gt;
+
+namespace FileManager
+<input id = _29 type = "checkbox"><label class = "drop" for = "_29"></label><div><input id = _29 type = "checkbox"><label class = "drop" for = "_29"></label><div><input id = _29 type = "checkbox"><label class = "drop" for = "_29"></label><div>{
+  struct IFileEventHandler
+  <input id = _31 type = "checkbox"><label class = "drop" for = "_31"></label><div><input id = _31 type = "checkbox"><label class = "drop" for = "_31"></label><div><input id = _31 type = "checkbox"><label class = "drop" for = "_31"></label><div>{
+    virtual void execute(const std::string& fileSpec) = 0;
+  };
+</div></div></div>
+  struct IDirEventHandler
+  <input id = _36 type = "checkbox"><label class = "drop" for = "_36"></label><div><input id = _36 type = "checkbox"><label class = "drop" for = "_36"></label><div><input id = _36 type = "checkbox"><label class = "drop" for = "_36"></label><div>{
+    virtual void execute(const std::string& dirSpec) = 0;
+  };
+</div></div></div>
+  struct IDoneEventHandler
+  <input id = _41 type = "checkbox"><label class = "drop" for = "_41"></label><div><input id = _41 type = "checkbox"><label class = "drop" for = "_41"></label><div><input id = _41 type = "checkbox"><label class = "drop" for = "_41"></label><div>{
+    virtual void execute(size_t numFilesProcessed) = 0;
+  };
+</div></div></div>
+  struct IFileMgr
+  <input id = _46 type = "checkbox"><label class = "drop" for = "_46"></label><div><input id = _46 type = "checkbox"><label class = "drop" for = "_46"></label><div><input id = _46 type = "checkbox"><label class = "drop" for = "_46"></label><div>{
+    virtual ~IFileMgr() <input id = _47 type = "checkbox"><label class = "drop" for = "_47"></label><div><input id = _47 type = "checkbox"><label class = "drop" for = "_47"></label><div><input id = _47 type = "checkbox"><label class = "drop" for = "_47"></label><div>{}</div>
+    virtual void addPattern(const std::string& patt) = 0;</div></div>
+    virtual void search() = 0;
+    virtual void find(const std::string& path) = 0;
+    virtual void regForFiles(IFileEventHandler* pEventHandler) = 0;
+    virtual void regForDirs(IDirEventHandler* pEventHandler) = 0;
+    virtual void regForDone(IDoneEventHandler* pEventHandler) = 0;
+    static IFileMgr* getInstance();
+  };
+</div></div></div>
+  struct FileMgrFactory
+  <input id = _58 type = "checkbox"><label class = "drop" for = "_58"></label><div><input id = _58 type = "checkbox"><label class = "drop" for = "_58"></label><div><input id = _58 type = "checkbox"><label class = "drop" for = "_58"></label><div>{
+    static IFileMgr* create(const std::string& path);
+  };
+}</div></div></div></div></div></div>
+    </pre>
+  </body>
+</html>

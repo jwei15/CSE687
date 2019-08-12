@@ -1,0 +1,471 @@
+<DOCTYPE !HTML></div>
+<html>
+  <head>
+    <Title>Toker.h</Title>
+    <style>
+      body <input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div>{
+        padding:15px 40px;
+        font-family: Consolas;
+        font-size: 1.25em;
+        font-weight: normal;
+      }</div>
+      </style>
+      <link rel="stylesheet"  href="../foldingformat.css" />
+  </head>
+
+  <body>
+    <h3>Dependencies: 
+      <a href="Properties.h.html">Properties.h</a>
+    </h3>    <pre>
+#ifndef TOKER_H
+#define TOKER_H
+<input id = _25 type = "checkbox"><label class = "drop" for = "_25"></label><div>/////////////////////////////////////////////////////////////////////
+// Toker.h - Collects words from a stream                          //
+// ver 1.1                                                         //
+// Jim Fawcett, CSE687 - Object Oriented Design, Spring 2019       //
+/////////////////////////////////////////////////////////////////////</div>
+<input id = _51 type = "checkbox"><label class = "drop" for = "_51"></label><div>/*
+ * Package Operations:
+ * -------------------
+ * This tokenizer is implemented with the State Pattern, and:
+ * - Collects words, called tokens, from a stream.  
+ * - Discards all whitespace except for newlines which are returned as
+ *   single character tokens.
+ * - By default, collects and discards all comments, but has an option
+ *   to return each comment as a single token.  
+ * - Also returns quoted strings and quoted characters as tokens.
+ *   Toker correctly handles the C# string @"...".
+ * - This package demonstrates how to build a tokenizer based on the 
+ *   State Pattern.  
+  * 
+ * Required Files:
+ * ---------------
+ * Toker.h, Toker.cpp
+ * 
+ * Maintenance History
+ * -------------------
+ * ver 1.1 : 27 Feb 2019
+ * - fixed bugs in toker by checking for end-of-file in getTok() function
+ *   in SingleLineCommentState and MultiLineCommentState
+ * ver 1.0 : 09 Feb 2019
+ * - first release - port of C# design
+ */</div>
+
+#include &lt;fstream&gt;
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;deque&gt;
+#include &lt;unordered_set&gt;
+#include &lt;cctype&gt;
+#include &lt;locale&gt;
+#include "../CppProperties/Properties.h"
+
+using namespace Utilities;
+using Token = std::string;
+
+namespace Lexer
+<input id = _67 type = "checkbox"><label class = "drop" for = "_67"></label><div>{
+  const std::locale loc;
+
+  ///////////////////////////////////////////////////////////////////
+  // ITokenSource interface
+  // - Declares operations expected of any source of tokens
+  // - Typically we would use either files or strings.  This demo
+  //   provides a source only for Files, e.g., TokenFileSource, below.
+
+  struct ITokenSource
+  <input id = _77 type = "checkbox"><label class = "drop" for = "_77"></label><div>{
+    virtual ~ITokenSource() <input id = _78 type = "checkbox"><label class = "drop" for = "_78"></label><div>{}</div>
+    virtual bool open(std::string path) = 0;
+    virtual void close() = 0;
+    virtual int next() = 0;
+    virtual int peek(size_t n = 0) = 0;
+    virtual bool end() = 0;
+    Property&lt;size_t&gt; lineCount;
+  };
+</div>
+  ///////////////////////////////////////////////////////////////////
+  // ITokenState interface
+  // - Declares operations expected of any token gathering state
+
+  class TokenSourceFile;
+  struct TokenContext;
+
+  class ITokenState
+  <input id = _95 type = "checkbox"><label class = "drop" for = "_95"></label><div>{
+  public:
+    virtual ~ITokenState() <input id = _97 type = "checkbox"><label class = "drop" for = "_97"></label><div>{}</div>
+    static void setContext(TokenContext* pContext);
+    virtual Token getTok() = 0;
+    virtual bool isWhiteSpace() = 0;
+    virtual bool isPunctuation() = 0;
+    virtual bool isDone() = 0;
+    virtual ITokenState* nextState() = 0;
+    Property&lt;std::unordered_set&lt;std::string&gt;&gt; oneCharTokens_;
+    Property&lt;std::unordered_set&lt;std::string&gt;&gt; twoCharTokens_;
+
+  protected:
+    static TokenContext* pContext_;  // derived classes store context ref here
+    TokenSourceFile* pSrc_ = nullptr;
+  };
+</div>
+  ///////////////////////////////////////////////////////////////////
+  // TokenContext class
+  // - holds all the tokenizer states
+  // - holds source of tokens
+
+  struct TokenContext
+  <input id = _118 type = "checkbox"><label class = "drop" for = "_118"></label><div>{
+    ITokenState* pCurrentState_ = nullptr;
+    ITokenState* pWhiteSpaceState_ = nullptr;
+    ITokenState* pAlphNumState_ = nullptr;
+    ITokenState* pPunctuationState_ = nullptr;
+    ITokenState* pNewLineState_ = nullptr;
+    ITokenState* pSingleLineCommentState_ = nullptr;
+    ITokenState* pMultiLineCommentState_ = nullptr;
+    ITokenState* pSingleQuoteState_ = nullptr;
+    ITokenState* pDoubleQuoteState_ = nullptr;
+    ITokenSource* pSrc_ = nullptr;
+
+    TokenContext();
+    ~TokenContext();
+    TokenContext(const TokenContext&) = delete;
+    TokenContext& operator=(const TokenContext&) = delete;
+  };
+</div>
+  ///////////////////////////////////////////////////////////////////
+  // TokenSourceFile class
+  // - extracts integers from token source
+  // - Streams often use terminators that can't be represented by
+  //   a character, so we collect all elements as ints
+  // - keeps track of the line number where a token is found
+  // - uses StreamReader which correctly handles byte order mark
+  //   characters and alternate text encodings.
+
+  class TokenSourceFile : public ITokenSource
+  <input id = _146 type = "checkbox"><label class = "drop" for = "_146"></label><div>{
+  private:
+    std::ifstream fs_;            // physical source of text
+    std::deque&lt;int&gt; charQ_;       // enqueing ints but using as chars
+    TokenContext* pContext_;
+
+  public:
+    TokenSourceFile(TokenContext* pContext);
+    ~TokenSourceFile();
+    bool open(std::string path);
+    void close();
+    int next();
+    int peek(size_t n = 0);  // peek n ints into source without extracting them
+    bool end();
+  };
+</div>
+  ///////////////////////////////////////////////////////////////////
+  // TokenState class
+  // - base for all the tokenizer states
+
+  class TokenState : public ITokenState
+  <input id = _167 type = "checkbox"><label class = "drop" for = "_167"></label><div>{
+  public:
+    TokenState(const TokenState&) = delete;
+    TokenState& operator=(const TokenState&) = delete;
+    virtual ~TokenState() <input id = _171 type = "checkbox"><label class = "drop" for = "_171"></label><div>{}</div>
+
+    TokenState();
+    static void setContext(TokenContext* pContext);
+    std::unordered_set&lt;std::string&gt;& oneCharTokens();
+    bool oneCharTokensContains(const std::string& tok);
+    std::unordered_set&lt;std::string&gt;& twoCharTokens();
+    bool twoCharTokensContains(const std::string& tok);
+    bool addOneCharToken(const std::string& oneCharTok);
+    bool removeOneCharToken(const std::string& oneCharTok);
+    bool addTwoCharToken(const std::string& twoCharTok);
+    bool removeTwoCharToken(const std::string& twoCharTok);
+    bool open(const std::string& path);
+
+    virtual Token getTok() = 0;
+
+    bool isWhiteSpace();
+    bool isNewLine();
+    bool isAlphaNum();
+    bool isSingleLineComment();
+    bool isMultiLineComment();
+    bool isDoubleQuote();
+    bool isSingleQuote();
+    bool isPunctuation();
+    ITokenState* nextState();
+    bool isDone();
+    bool isEscaped(Token tok);
+  };
+  ///////////////////////////////////////////////////////////////////</div>
+  // Derived State Classes      getTok() returns
+  // -------------------------  -------------------------------------
+<input id = _222 type = "checkbox"><label class = "drop" for = "_222"></label><div>  /* - WhiteSpaceState          Token with space, tab, and return chars
+   * - NewLineState             Token with newline
+   * - AlphaNumState            Token with letters, digits, and underscore
+   * - SingleLineCommentState   Token holding C++ style comment
+   * - MultiLineCommentState    Token holding C style comment
+   * - SingleQuoteState         Token holding a quoted character
+   * - DoubleQuoteState         Token holding a quoted string
+   * - PunctuationState         Token holding anything not included above
+   * ----------------------------------------------------------------
+   * - Each state class accepts a reference to the context in its
+   *   constructor and saves in its inherited context_ property.
+   * - It is only required to provide a getTok() method which
+   *   returns a token conforming to its state, e.g., whitespace, ...
+   * - getTok() assumes that the TokenSource's first character
+   *   matches its type e.g., whitespace char, ...
+   * - The nextState() method ensures that the condition, above, is
+   *   satisfied.
+   * - The getTok() method promises not to extract characters from
+   *   the TokenSource that belong to another state.
+   * - These requirements lead us to depend heavily on peeking into
+   *   the TokenSource's content.
+   */</div>
+   ///////////////////////////////////////////////////////////////////
+   // WhiteSpaceState class
+   // - extracts, from context_.src, contiguous whitespace chars as token
+   // - will be thrown away by tokenizer
+
+  class WhiteSpaceState : public TokenState
+  <input id = _230 type = "checkbox"><label class = "drop" for = "_230"></label><div>{
+  public:
+    //----&lt; keep extracting until get non-whitespace &gt;---------------
+
+    virtual Token getTok() override
+    <input id = _235 type = "checkbox"><label class = "drop" for = "_235"></label><div>{
+      Token tok;
+      tok += (char)pContext_-&gt;pSrc_-&gt;next();     // first is WhiteSpace
+
+      while (pContext_-&gt;pCurrentState_-&gt;isWhiteSpace())  // stop when non-WhiteSpace
+      <input id = _240 type = "checkbox"><label class = "drop" for = "_240"></label><div>{
+        tok += (char)pContext_-&gt;pSrc_-&gt;next();
+      }</div>
+      return tok;
+    }</div>
+  };
+  ///////////////////////////////////////////////////////////////////</div>
+  // NewLineState class
+  // - extracts, from context_.src, a single newline character
+
+  class NewLineState : public TokenState
+  <input id = _251 type = "checkbox"><label class = "drop" for = "_251"></label><div>{
+  public:
+    //----&lt; return first char in src, as it must be a newline &gt;------
+
+    virtual Token getTok() override
+    <input id = _256 type = "checkbox"><label class = "drop" for = "_256"></label><div>{
+      Token tok;
+      tok += (char)pContext_-&gt;pSrc_-&gt;next();     // first is newline
+
+      return tok;
+    }</div>
+  };
+  ///////////////////////////////////////////////////////////////////</div>
+  // AlphaNumState class
+  // - extracts contiguous letter and digit chars as a token
+
+  class AlphaNumState : public TokenState
+  <input id = _268 type = "checkbox"><label class = "drop" for = "_268"></label><div>{
+  public:
+    //----&lt; keep extracting until get non-alphanum &gt;-----------------
+
+    virtual Token getTok() override
+    <input id = _273 type = "checkbox"><label class = "drop" for = "_273"></label><div>{
+      Token tok;
+      tok += (char)pContext_-&gt;pSrc_-&gt;next();  // first is alphanum
+
+      while (isAlphaNum())            // stop when non-alphanum
+      <input id = _278 type = "checkbox"><label class = "drop" for = "_278"></label><div>{
+        tok += (char)pContext_-&gt;pSrc_-&gt;next();
+      }</div>
+      return tok;
+    }</div>
+  };
+  ///////////////////////////////////////////////////////////////////</div>
+  // SingleLineCommentState class
+  // - extracts single line comment as a token
+
+  class SingleLineCommentState : public TokenState
+  <input id = _289 type = "checkbox"><label class = "drop" for = "_289"></label><div>{
+  public:
+    //----&lt; keep extracting until get newline &gt;--------------
+
+    virtual Token getTok() override
+    <input id = _294 type = "checkbox"><label class = "drop" for = "_294"></label><div>{
+      Token tok;
+      tok += (char)pContext_-&gt;pSrc_-&gt;next();   // char is /
+      tok += (char)pContext_-&gt;pSrc_-&gt;next();   // char is /
+
+      char ch;
+      while (true)   // stop when newline
+      <input id = _301 type = "checkbox"><label class = "drop" for = "_301"></label><div>{
+        ch = (char)pContext_-&gt;pSrc_-&gt;peek();
+        if (ch == '\n' || int(ch) == -1)
+          break;
+        tok += (char)pContext_-&gt;pSrc_-&gt;next();
+      }</div>
+      return tok;
+    }</div>
+  };
+  ///////////////////////////////////////////////////////////////////</div>
+  // MulitpleLineComment class
+  // - extracts multiple line comment as a token
+
+  class MultiLineCommentState : public TokenState
+  <input id = _315 type = "checkbox"><label class = "drop" for = "_315"></label><div>{
+  public:
+    //----&lt; keep extracting until get comment termintor &gt;------------
+
+    virtual Token getTok() override
+    <input id = _320 type = "checkbox"><label class = "drop" for = "_320"></label><div>{
+      Token tok;
+      tok += (char)pContext_-&gt;pSrc_-&gt;next();       // char is /
+      tok += (char)pContext_-&gt;pSrc_-&gt;next();       // char is *
+
+      char ch = ' ', prevCh = ' ';
+      while (true)   // stop when newline
+      <input id = _327 type = "checkbox"><label class = "drop" for = "_327"></label><div>{
+        prevCh = ch;
+        ch = (char)pContext_-&gt;pSrc_-&gt;next();
+        tok += ch;
+        if (prevCh == '*' && ch == '/' || int(ch) == -1)
+          break;
+      }</div>
+      return tok;
+    }</div>
+  };
+  ///////////////////////////////////////////////////////////////////</div>
+  // SingleQuoteState class
+  // - extracts single quoted char as a token with quotes
+
+  class SingleQuoteState : public TokenState
+  <input id = _342 type = "checkbox"><label class = "drop" for = "_342"></label><div>{
+  public:
+    //----&lt; keep extracting until get end quote &gt;--------------------
+
+    virtual Token getTok() override
+    <input id = _347 type = "checkbox"><label class = "drop" for = "_347"></label><div>{
+      Token tok;
+      tok += (char)pContext_-&gt;pSrc_-&gt;next();       // char is '\''
+
+      while (true)
+      <input id = _352 type = "checkbox"><label class = "drop" for = "_352"></label><div>{
+        char ch = (char)pContext_-&gt;pSrc_-&gt;next();
+        tok += ch;
+        if (ch == '\'' && !isEscaped(tok))
+          break;
+      }</div>
+      return tok;
+    }</div>
+  };
+  ///////////////////////////////////////////////////////////////////</div>
+  // DoubleQuoteState class
+  // - extracts text in quotes as a token
+
+  class DoubleQuoteState : public TokenState
+  <input id = _366 type = "checkbox"><label class = "drop" for = "_366"></label><div>{
+  public:
+    //----&lt; keep extracting until get end quote &gt;--------------------
+
+    virtual Token getTok() override
+    <input id = _371 type = "checkbox"><label class = "drop" for = "_371"></label><div>{
+      Token tok;
+      tok += (char)pContext_-&gt;pSrc_-&gt;next();       // char is "\"" or "@"
+      char nxt = (char)pContext_-&gt;pSrc_-&gt;peek();
+      if (nxt == '\"' && tok[0] == '@')
+        tok += (char)pContext_-&gt;pSrc_-&gt;next();
+
+      while (true)
+      <input id = _379 type = "checkbox"><label class = "drop" for = "_379"></label><div>{
+        char ch = (char)pContext_-&gt;pSrc_-&gt;next();
+        tok += ch;
+        if (ch == '\"' && (!isEscaped(tok) || tok[0] == '@'))
+          break;
+      }</div>
+      return tok;
+    }</div>
+  };
+  ///////////////////////////////////////////////////////////////////</div>
+  // PunctuationState class
+  // - extracts contiguous punctuation chars as a token
+
+  class PunctuationState : public TokenState
+  <input id = _393 type = "checkbox"><label class = "drop" for = "_393"></label><div>{
+  public:
+    //----&lt; keep extracting until get non-punctuator &gt;---------------
+<input id = _398 type = "checkbox"><label class = "drop" for = "_398"></label><div>    /*
+     * Here is where we handle single char and two char special tokens
+     * as well as other punctuators.
+     */</div>
+    virtual Token getTok() override
+    <input id = _401 type = "checkbox"><label class = "drop" for = "_401"></label><div>{
+      // is this a two char special token?
+      Token test;
+      test += (char)pContext_-&gt;pSrc_-&gt;peek();
+      test += (char)pContext_-&gt;pSrc_-&gt;peek(1);
+      if (twoCharTokensContains(test))
+      <input id = _407 type = "checkbox"><label class = "drop" for = "_407"></label><div>{
+        pContext_-&gt;pSrc_-&gt;next();  // pop peeked char
+        pContext_-&gt;pSrc_-&gt;next();  // pop peeked char
+        return test;
+      }</div>
+      // is this a single char special token?
+      Token tok;
+      tok += (char)pContext_-&gt;pSrc_-&gt;next();       // pop first punctuator
+      if (oneCharTokensContains(tok))
+        return tok;
+
+      // not special token, so continue collecting punctuation chars
+      while (pContext_-&gt;pCurrentState_-&gt;isPunctuation())
+      <input id = _420 type = "checkbox"><label class = "drop" for = "_420"></label><div>{
+        // check for other special cases starting in middle of punctuator
+        if (
+          isMultiLineComment() || isSingleLineComment() ||
+          isDoubleQuote() || isSingleQuote()
+          )
+          break;
+        tok += (char)pContext_-&gt;pSrc_-&gt;next();
+      }</div>
+      return tok;
+    }</div>
+  };
+  ///////////////////////////////////////////////////////////////////</div>
+  // Toker class
+  // - applications need to use only this class to collect tokens
+
+  class Toker
+  <input id = _437 type = "checkbox"><label class = "drop" for = "_437"></label><div>{
+  private:
+    TokenContext* pContext_ = nullptr;   // holds single instance of all states and token source
+
+  public:
+    Property&lt;bool&gt; doReturnComments;
+
+    Toker();
+    ~Toker();
+    bool open(const std::string& path);
+    void close();
+    bool overwrite(Token tok);
+    Token getTok();
+    bool isDone();
+    int lineCount();
+    Property&lt;std::unordered_set&lt;std::string&gt;&gt;& oneCharTokens();
+    Property&lt;std::unordered_set&lt;std::string&gt;&gt;& twoCharTokens();
+    bool addOneCharToken(const std::string& oneCharTok);
+    bool removeOneCharToken(const std::string& oneCharTok);
+    bool addTwoCharToken(const std::string& twoCharTok);
+    bool removeTwoCharToken(const std::string& twoCharTok);
+    static bool isWhiteSpace(Token tok);
+    static bool isNewLine(Token tok);
+    static bool isAlphaNum(Token tok);
+    static bool isPunctuator(Token tok);
+    static bool isSingleLineComment(Token tok);
+    static bool isMultipleLineComment(Token tok);
+    static bool isDoubleQuote(Token tok);
+    static bool isSingleQuote(Token tok);
+  };
+}</div></div>
+#endif
+    </pre>
+  </body>
+</html>

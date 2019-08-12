@@ -1,0 +1,93 @@
+<DOCTYPE !HTML></div>
+<html>
+  <head>
+    <Title>Properties.h</Title>
+    <style>
+      body <input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div>{
+        padding:15px 40px;
+        font-family: Consolas;
+        font-size: 1.25em;
+        font-weight: normal;
+      }</div>
+      </style>
+      <link rel="stylesheet"  href="../foldingformat.css" />
+  </head>
+
+  <body>
+    <pre>
+#pragma once
+<input id = _22 type = "checkbox"><label class = "drop" for = "_22"></label><div>/////////////////////////////////////////////////////////////////////
+// Properties.h - provides getter and setter methods               //
+// ver 1.1                                                         //
+// Jim Fawcett, CSE687 - Object Oriented Design, Fall 2018         //
+/////////////////////////////////////////////////////////////////////</div>
+<input id = _52 type = "checkbox"><label class = "drop" for = "_52"></label><div>/*
+*  Package Operations:
+*  -------------------
+*  This package provides a single Property&lt;T&gt; class that provides
+*  getter and setter methods and backing store T t_ using the property 
+*  name.
+*  - Here's an example:
+*      Property&lt;int&gt; intProp;
+*      intProp(42)    Sets its internal store to 42
+*      intProp()      returns the internal store value
+*  - So one declaration creates two methods with simple syntax, using
+*    the property's instance name. 
+*  - The getter and setter methods are virtual, so you can override
+*    them to provide logic that constraints getting and setting.
+*  - Property also provides the method ref() which returns a reference
+*    to the underlying stored value.  That lets us call member functions
+*    directly on the stored type.  However, that lets users bypass
+*    setter logic, so use it with caution.
+*
+*  Required Files:
+*  ---------------
+*  Properties.h
+*
+*  Maintenance History:
+*  --------------------
+*  ver 1.1 : 30 Jan 2019
+*  - added ref()
+*  ver 1.0 : 11 Oct 2018
+*  - first release
+*/</div>
+namespace Utilities
+<input id = _55 type = "checkbox"><label class = "drop" for = "_55"></label><div>{
+  template &lt;typename T&gt;
+  class Property
+  <input id = _58 type = "checkbox"><label class = "drop" for = "_58"></label><div>{
+  public:
+    virtual ~Property() <input id = _60 type = "checkbox"><label class = "drop" for = "_60"></label><div>{}</div>
+
+    //----&lt; setter assigns the state of t to the internal store &gt;----
+
+    virtual void operator()(const T& t)
+    <input id = _65 type = "checkbox"><label class = "drop" for = "_65"></label><div>{
+      t_ = t;
+    }</div>
+    //----&lt; getter returns the value of the internal store &gt;---------
+<input id = _71 type = "checkbox"><label class = "drop" for = "_71"></label><div>    /*
+    *  - Return by value is used so that clients cannot change the
+    *    internal store without using setter.
+    */</div>
+    virtual T operator()()
+    <input id = _74 type = "checkbox"><label class = "drop" for = "_74"></label><div>{
+      return t_;
+    }</div>
+    //----&lt; getter that returns reference &gt;--------------------------
+<input id = _81 type = "checkbox"><label class = "drop" for = "_81"></label><div>    /*
+    *  - Allows us to call member function on stored type
+    *  - Note that this allows a user to bypass any logic
+    *    in setter.
+    */</div>
+    virtual T& ref()
+    <input id = _84 type = "checkbox"><label class = "drop" for = "_84"></label><div>{
+      return t_;
+    }</div>
+  private:
+    T t_;
+  };
+}</div></div>
+    </pre>
+  </body>
+</html>

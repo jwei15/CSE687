@@ -1,0 +1,91 @@
+<DOCTYPE !HTML></div>
+<html>
+  <head>
+    <Title>DependencyTable.h</Title>
+    <style>
+      body <input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div>{
+        padding:15px 40px;
+        font-family: Consolas;
+        font-size: 1.25em;
+        font-weight: normal;
+      }</div>
+      </style>
+      <link rel="stylesheet"  href="../foldingformat.css" />
+  </head>
+
+  <body>
+    <pre>
+#pragma once
+<input id = _26 type = "checkbox"><label class = "drop" for = "_26"></label><div>///////////////////////////////////////////////////////////////////////////
+// DependencyTable.h : defines dependency table structure                //
+// ver 1.0                                                               //
+//                                                                       // 
+// Application   : OOD-S19 Instructor Solution                           //
+// Platform      : Visual Studio Community 2017, Windows 10 Pro x64      //
+// Author        : Ammar Salman, Syracuse University                     //
+//                 313/788-4694, assalman@syr.edu                        //
+///////////////////////////////////////////////////////////////////////////</div>
+<input id = _45 type = "checkbox"><label class = "drop" for = "_45"></label><div>/*
+*  Package Operations:
+* =======================
+*  This package defines DependencyTable class which is used to hold files
+*  relationships after dependency analysis is performed. It is simply a
+*  wrapper around std::unordered_map which uses string key and vector
+*  value. Therefore, every file in the analysis will point to a vector
+*  of all the files it depends upon. 
+*
+*
+*  Required Files:
+* =======================
+*  DependencyTable.h DependencyTable.cpp Logger.h Logger.cpp
+*
+*  Maintainence History:
+* =======================
+*  ver 1.0 - 11 Feb 2019
+*  - first release
+*/</div>
+
+#include &lt;unordered_map&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+
+class DependencyTable
+<input id = _53 type = "checkbox"><label class = "drop" for = "_53"></label><div>{
+public:
+  using file = std::string;
+  using files = std::vector&lt;file&gt;;
+  using dependencies = std::vector&lt;file&gt;;
+  using iterator = std::unordered_map&lt;file, dependencies&gt;::iterator;
+
+
+  DependencyTable();
+  DependencyTable(const files& list);
+  ~DependencyTable();
+
+  bool has(const std::string& file);
+
+  void addDependency(file filename, file dependency);
+  void removeDependency(file filename, file dependency);
+
+  void removeEntry(file filename);
+
+  const dependencies& getDependencies(file filename) const;
+  const dependencies& operator[](const file& filename) const;
+
+  // these two functions allow 'for' loops in the form of
+  // for(auto entry : dt) {...}
+  iterator begin();
+  iterator end();
+  void clear() <input id = _79 type = "checkbox"><label class = "drop" for = "_79"></label><div>{ table_.clear(); }</div>
+
+  files getFiles() const;
+
+  void display();
+
+private:
+  std::unordered_map&lt;file, dependencies&gt; table_;
+};
+</div>
+    </pre>
+  </body>
+</html>

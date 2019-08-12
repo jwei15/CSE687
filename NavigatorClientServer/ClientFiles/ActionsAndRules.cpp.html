@@ -1,0 +1,83 @@
+<DOCTYPE !HTML>
+<html>
+  <head>
+    <Title>ActionsAndRules.cpp</Title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+
+  <body>
+    <span class="absolute">
+      <label><input type="checkbox" id ="hideF" value="hidefuncs" checked="true" onclick="toggleVisibility('function')">Functions</label><br>
+      <label><input type="checkbox" id ="hideC" value="hideclass" checked="true" onclick="toggleVisibility('class')">Classes</label><br>
+      <label><input type="checkbox" id ="hidec" value="hidecomms" checked="true" onclick="toggleVisibility('comment')">Comments</label><br>
+    </span>
+    <h3>Dependencies: 
+      <a href=".html"></a>
+      <a href="ActionsAndRules.h.html">ActionsAndRules.h</a>
+    </h3>    <pre>
+<span class="comment">/////////////////////////////////////////////////////////////////////
+//  ActionsAndRules.cpp - implements new parsing rules and actions //
+//  ver 3.4                                                        //
+//  Language:      Visual C++ 2008, SP1                            //
+//  Platform:      Dell Precision T7400, Vista Ultimate SP1        //
+//  Application:   Prototype for CSE687 Pr1, Sp09                  //
+//  Author:        Jim Fawcett, CST 4-187, Syracuse University     //
+//                 (315) 443-3948, jfawcett@twcny.rr.com           //
+/////////////////////////////////////////////////////////////////////
+</span>
+#include "ActionsAndRules.h"
+#include "../Utilities/Utilities.h"
+
+using namespace CodeAnalysis;
+
+Repository* Repository::instance;
+
+#ifdef TEST_ACTIONSANDRULES
+
+#include &lt;iostream&gt;
+#include "ActionsAndRules.h"
+#include "Tokenizer.h"
+#include "Semiression.h"
+
+int main(int argc, char* argv[])
+<span class="function">{
+  std::cout &lt;&lt; "\n  Testing ActionsAndRules class\n "
+            &lt;&lt; std::string(30,'=') &lt;&lt; std::endl;
+
+  try
+  {
+    Utilities::StringHelpers::Title(
+      "Actions and Rules - these construction tests are no longer valid"
+    );
+    <span class="comment">//PreprocStatement pps;
+    //pps.addAction(&ppq);
+</span>
+    <span class="comment">//FunctionDefinition fnd;
+    //PrettyPrintToQ pprtQ(resultsQ);
+    //fnd.addAction(&pprtQ);
+</span>
+    <span class="comment">//Toker toker("../ActionsAndRules.h");
+    //Semi se(&toker);
+    //Parser parser(&se);
+    //parser.addRule(&pps);
+    //parser.addRule(&fnd);
+    //while(se.get())
+    //  parser.parse();
+    //size_t len = resultsQ.size();
+    //for(size_t i=0; i&lt;len; ++i)
+    //{
+    //  std::cout &lt;&lt; "\n  " &lt;&lt; resultsQ.front().c_str();
+    //  resultsQ.pop();
+    //}
+</span>    std::cout &lt;&lt; "\n\n";
+  }
+  catch(std::exception& ex)
+  {
+    std::cout &lt;&lt; "\n\n  " &lt;&lt; ex.what() &lt;&lt; "\n\n";
+  }
+}</span>
+#endif
+    </pre>
+  </body>
+</html>

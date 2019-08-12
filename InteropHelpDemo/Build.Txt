@@ -1,0 +1,10 @@
+Build.txt
+===========================================================
+In order for this solution to build:
+1. Build NativeCpp as a static library
+2. Make a reference to that in the Translator project and
+   build that as a dll
+3. In the C# client, make a reference to the Translator
+   project and build as a console application.
+4. Run from the Debug menu item using the Start without Debugging
+   option.

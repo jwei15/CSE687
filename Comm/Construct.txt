@@ -1,0 +1,35 @@
+Construct.txt
+====================
+Demonstrating MsgPassingComm (now set as default)
+1. Set MsgPassingComm Properties:
+   - general tab: set Configuration Type as Application (exe)
+   - Select C/C++ > Preprocessor > Preprocessor Definitions > noTEST_COMM
+2. Set MsgPassingComm as startup project
+   - view sending messages and files
+3. I set filesending blocksize to 1024 bytes for demo.  You may wish to set
+   it higher, perhaps 262144 bytes.
+
+Demonstrating MT1Q2 - Project #3 demo using threads instead of Processes:
+1. Build MsgPassingComm as static library with noTest preproc
+2. Set MT1Q2 properties:
+   - general tab: set Configuration Type as Application (exe)
+   - Select C/C++ > Preprocessor > Preprocessor Definitions > no project defs
+2. Set MT1Q2 as startup project
+   - view msg flow for Client, TestHarness, and Testers
+
+Building Peer1 and Peer2
+This part describes how Peer1 and Peer2 were constructed.
+1. Create an empty solution in your working directory
+1. Add C++ windows console applications Peer1 and Peer2.
+2. Copy the folder CppCommWithFileXfer from Project2HelpF2018 or 
+   from Handouts\Repository\Cpp\CppCommWithFileXfer.
+3. Load the projects for FileSystem, Message, MsgPassingComm, 
+   Sockets, and StringUtilities.
+4. Build them all as static libraries
+   - make sure you change TEST_PPP to noTEST_PPP in 
+     Properties > C/C++ > Preprocessor > Preprocessor Definitions
+5. Make references to all of them in your Peer1 and Peer2 projects.
+6. Now add code in the Peers to send and receive messages and
+   files.
+7. This demo shows the results of doing that.
+

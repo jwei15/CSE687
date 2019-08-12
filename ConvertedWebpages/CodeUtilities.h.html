@@ -1,0 +1,520 @@
+<DOCTYPE !HTML></div></div></div>
+<html>
+  <head>
+    <Title>CodeUtilities.h</Title>
+    <style>
+      body <input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div><input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div><input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div>{
+        padding:15px 40px;
+        font-family: Consolas;
+        font-size: 1.25em;
+        font-weight: normal;
+      }</div>
+      </style></div></div>
+      <link rel="stylesheet"  href="../foldingformat.css" />
+  </head>
+
+  <body>
+    <pre>
+#pragma once
+<input id = _26 type = "checkbox"><label class = "drop" for = "_26"></label><div>///////////////////////////////////////////////////////////////////////
+// CodeUtilities.h - small, generally useful, helper classes         //
+// ver 1.3                                                           //
+// Language:    C++, Visual Studio 2017                              //
+// Application: Most Projects, CSE687 - Object Oriented Design       //
+// Author:      Ammar Salmon, TA, CSE687                             //
+// Source:      Jim Fawcett, Syracuse University, CST 4-187          //
+//              jfawcett@twcny.rr.com                                //
+///////////////////////////////////////////////////////////////////////</div>
+<input id = _63 type = "checkbox"><label class = "drop" for = "_63"></label><div><input id = _63 type = "checkbox"><label class = "drop" for = "_63"></label><div><input id = _63 type = "checkbox"><label class = "drop" for = "_63"></label><div>/*
+* Package Operations:
+* -------------------
+* This package provides classes:
+* - ProcessCmdLine    extracts path, options, patterns, and a number from command line
+* - Converter&lt;T&gt;      converts T to and from strings
+* - Box&lt;T&gt;            converts primitive type to instance of a class
+* - PersistFactory&lt;T&gt; adds toXml() method to T
+*
+* Build Process:
+* --------------
+* Required Files: 
+*   CodeUtilities.h
+*
+* Maintenance History:
+* --------------------
+* ver 1.3 : 16 Aug 2018
+* - added default usage text
+* ver 1.2 : 11 Aug 2018
+* - added ProcessCmdLine::hasOption method
+* - fixed bugs in ProcessCmdLine::showCmdLine
+*   and ProcessCmdLine::showOptions
+* ver 1.1 : 10 Aug 2018
+* - added ProcessCmdLine class
+* ver 1.0 : 12 Jan 2018
+* - first release
+* - refactored from earlier Utilities.h
+*
+* Notes:
+* ------
+* - Designed to provide all functionality in header file. 
+* - Implementation file only needed for test and demo.
+*
+* Planned Additions and Changes:
+* ------------------------------
+* - none yet
+*/</div></div></div>
+
+#include &lt;vector&gt;
+#include &lt;string&gt;
+#include &lt;sstream&gt;
+#include &lt;iostream&gt;
+#include &lt;regex&gt;
+
+namespace CodeUtilities
+<input id = _73 type = "checkbox"><label class = "drop" for = "_73"></label><div><input id = _73 type = "checkbox"><label class = "drop" for = "_73"></label><div><input id = _73 type = "checkbox"><label class = "drop" for = "_73"></label><div>{
+  /////////////////////////////////////////////////////////////////////
+  // preface function
+  // - used to add a string preface to an output, e.g., "\n  "
+
+  inline void preface(const std::string& msg = "", bool doReturn = true, std::ostream& out = std::cout, const std::string& prefix = "  ")
+  <input id = _79 type = "checkbox"><label class = "drop" for = "_79"></label><div><input id = _79 type = "checkbox"><label class = "drop" for = "_79"></label><div><input id = _79 type = "checkbox"><label class = "drop" for = "_79"></label><div>{
+    if (doReturn) out &lt;&lt; "\n" &lt;&lt; prefix &lt;&lt; msg;
+  }</div>
+</div></div>
+  inline std::string defaultUsage()
+  <input id = _84 type = "checkbox"><label class = "drop" for = "_84"></label><div><input id = _84 type = "checkbox"><label class = "drop" for = "_84"></label><div><input id = _84 type = "checkbox"><label class = "drop" for = "_84"></label><div>{
+    std::string usage;
+    usage += "\n  Command Line: path [/option]* [/pattern]* [integer]";
+    usage += "\n    path is relative or absolute path where processing begins";
+    usage += "\n    [/option]* are one or more options of the form /s, /r, etc.";
+    usage += "\n    [pattern]* are one or more pattern strings used for matching";
+    usage += "\n    [integer] is the maximum number of items to process";
+    usage += "\n";
+    return usage;
+  }</div>
+</div></div>
+  /////////////////////////////////////////////////////////////////////
+  // ProcessCmdLine class
+  // - extracts path, patterns, options, number
+
+  enum DisplayMode <input id = _99 type = "checkbox"><label class = "drop" for = "_99"></label><div><input id = _99 type = "checkbox"><label class = "drop" for = "_99"></label><div><input id = _99 type = "checkbox"><label class = "drop" for = "_99"></label><div>{
+    None,
+    Debug,
+    Demo
+  };</div>
+</div></div>
+  class ProcessCmdLine
+  <input id = _106 type = "checkbox"><label class = "drop" for = "_106"></label><div><input id = _106 type = "checkbox"><label class = "drop" for = "_106"></label><div><input id = _106 type = "checkbox"><label class = "drop" for = "_106"></label><div>{
+  public:
+    using Usage = std::string;
+    using Path = std::string;
+    using Option = std::string;
+    using Options = std::vector&lt;Option&gt;;
+    using Pattern = std::string;
+    using Patterns = std::vector&lt;Pattern&gt;;
+	using Regexes = std::vector&lt;std::string&gt;;
+    using Number = long int;
+
+    ProcessCmdLine(int argc, char** argv, std::ostream& out = std::cout);
+	ProcessCmdLine(std::vector&lt;std::string&gt; cmdline, std::ostream& out = std::cout);
+    ProcessCmdLine(const ProcessCmdLine&) = delete;
+    ProcessCmdLine& operator=(const ProcessCmdLine&) = delete;
+
+    bool parseError();
+    Path path();
+    void path(const Path& path);
+    Options options();
+    void option(Option op);
+    bool hasOption(Option op);
+    Patterns patterns();
+	Regexes regexes();
+    void pattern(const Pattern& patt);
+    Number maxItems();
+    void maxItems(Number number);
+    void usage(const Usage& usage);
+    void usage();
+    void showCmdLine(int argc, char** argv);
+    void showCmdLine();
+    void showPath();
+    void showOptions();
+    void showPatterns();
+	  void showRegexes();
+    void showMaxItems();
+    DisplayMode displayMode();
+
+  private:
+	  bool isValidRegex(const std::string& regex);
+  private:
+    Usage usage_;
+    Path path_;
+    Patterns patterns_;
+	  Regexes regexes_;
+    Options options_;
+    int maxItems_ = 0;
+    bool parseError_ = false;
+    std::ostream& out_;
+    DisplayMode dm_ = DisplayMode::None;
+  };
+</div></div></div>
+<input id = _157 type = "checkbox"><label class = "drop" for = "_157"></label><div><input id = _157 type = "checkbox"><label class = "drop" for = "_157"></label><div><input id = _157 type = "checkbox"><label class = "drop" for = "_157"></label><div>  /*----&lt; path operations &gt;------------------------------------------*/</div></div></div>
+
+  inline void ProcessCmdLine::path(const Path& path) 
+  <input id = _161 type = "checkbox"><label class = "drop" for = "_161"></label><div><input id = _161 type = "checkbox"><label class = "drop" for = "_161"></label><div><input id = _161 type = "checkbox"><label class = "drop" for = "_161"></label><div>{ 
+    path_ = path; 
+  }</div>
+</div></div>
+  inline ProcessCmdLine::Path ProcessCmdLine::path()
+  <input id = _166 type = "checkbox"><label class = "drop" for = "_166"></label><div><input id = _166 type = "checkbox"><label class = "drop" for = "_166"></label><div><input id = _166 type = "checkbox"><label class = "drop" for = "_166"></label><div>{
+    return path_;
+  }</div>
+</div></div>
+  inline void ProcessCmdLine::showPath()
+  <input id = _171 type = "checkbox"><label class = "drop" for = "_171"></label><div><input id = _171 type = "checkbox"><label class = "drop" for = "_171"></label><div><input id = _171 type = "checkbox"><label class = "drop" for = "_171"></label><div>{
+    out_ &lt;&lt; path_ &lt;&lt; " ";
+  }</div>
+</div></div>
+<input id = _174 type = "checkbox"><label class = "drop" for = "_174"></label><div><input id = _174 type = "checkbox"><label class = "drop" for = "_174"></label><div><input id = _174 type = "checkbox"><label class = "drop" for = "_174"></label><div>  /*----&lt; options operations &gt;---------------------------------------*/</div></div></div>
+
+  inline void ProcessCmdLine::option(Option option)
+  <input id = _178 type = "checkbox"><label class = "drop" for = "_178"></label><div><input id = _178 type = "checkbox"><label class = "drop" for = "_178"></label><div><input id = _178 type = "checkbox"><label class = "drop" for = "_178"></label><div>{
+    options_.push_back(option);
+  }</div>
+</div></div>
+  inline ProcessCmdLine::Options ProcessCmdLine::options()
+  <input id = _183 type = "checkbox"><label class = "drop" for = "_183"></label><div><input id = _183 type = "checkbox"><label class = "drop" for = "_183"></label><div><input id = _183 type = "checkbox"><label class = "drop" for = "_183"></label><div>{ 
+    return options_; 
+  }</div>
+</div></div>
+  inline bool ProcessCmdLine::hasOption(Option op)
+  <input id = _188 type = "checkbox"><label class = "drop" for = "_188"></label><div><input id = _188 type = "checkbox"><label class = "drop" for = "_188"></label><div><input id = _188 type = "checkbox"><label class = "drop" for = "_188"></label><div>{
+    for (auto item : options_)
+    <input id = _190 type = "checkbox"><label class = "drop" for = "_190"></label><div><input id = _190 type = "checkbox"><label class = "drop" for = "_190"></label><div><input id = _190 type = "checkbox"><label class = "drop" for = "_190"></label><div>{
+      if (item == op)
+      <input id = _192 type = "checkbox"><label class = "drop" for = "_192"></label><div><input id = _192 type = "checkbox"><label class = "drop" for = "_192"></label><div><input id = _192 type = "checkbox"><label class = "drop" for = "_192"></label><div>{
+        return true;
+      }</div>
+    }</div></div></div>
+    return false;</div></div>
+  }</div>
+</div></div>
+  inline void ProcessCmdLine::showOptions()
+  <input id = _200 type = "checkbox"><label class = "drop" for = "_200"></label><div><input id = _200 type = "checkbox"><label class = "drop" for = "_200"></label><div><input id = _200 type = "checkbox"><label class = "drop" for = "_200"></label><div>{
+    for (auto opt : options_)
+    <input id = _202 type = "checkbox"><label class = "drop" for = "_202"></label><div><input id = _202 type = "checkbox"><label class = "drop" for = "_202"></label><div><input id = _202 type = "checkbox"><label class = "drop" for = "_202"></label><div>{
+      out_ &lt;&lt; '/' &lt;&lt; opt &lt;&lt; " ";
+    }</div>
+  }</div></div></div>
+</div></div>
+<input id = _206 type = "checkbox"><label class = "drop" for = "_206"></label><div><input id = _206 type = "checkbox"><label class = "drop" for = "_206"></label><div><input id = _206 type = "checkbox"><label class = "drop" for = "_206"></label><div>  /*----&lt; patterns operations &gt;--------------------------------------*/</div></div></div>
+
+  inline void ProcessCmdLine::pattern(const Pattern& pattern)
+  <input id = _210 type = "checkbox"><label class = "drop" for = "_210"></label><div><input id = _210 type = "checkbox"><label class = "drop" for = "_210"></label><div><input id = _210 type = "checkbox"><label class = "drop" for = "_210"></label><div>{
+    patterns_.push_back(pattern);
+  }</div>
+</div></div>
+  inline ProcessCmdLine::Patterns ProcessCmdLine::patterns()
+  <input id = _215 type = "checkbox"><label class = "drop" for = "_215"></label><div><input id = _215 type = "checkbox"><label class = "drop" for = "_215"></label><div><input id = _215 type = "checkbox"><label class = "drop" for = "_215"></label><div>{
+    return patterns_;
+  }</div>
+</div></div>
+  inline ProcessCmdLine::Regexes ProcessCmdLine::regexes()
+  <input id = _220 type = "checkbox"><label class = "drop" for = "_220"></label><div><input id = _220 type = "checkbox"><label class = "drop" for = "_220"></label><div><input id = _220 type = "checkbox"><label class = "drop" for = "_220"></label><div>{
+	  return regexes_;
+  }</div>
+</div></div>
+  inline void ProcessCmdLine::showPatterns()
+  <input id = _225 type = "checkbox"><label class = "drop" for = "_225"></label><div><input id = _225 type = "checkbox"><label class = "drop" for = "_225"></label><div><input id = _225 type = "checkbox"><label class = "drop" for = "_225"></label><div>{
+    for (auto patt : patterns_)
+    <input id = _227 type = "checkbox"><label class = "drop" for = "_227"></label><div><input id = _227 type = "checkbox"><label class = "drop" for = "_227"></label><div><input id = _227 type = "checkbox"><label class = "drop" for = "_227"></label><div>{
+      out_ &lt;&lt; patt &lt;&lt; " ";
+    }</div>
+  }</div></div></div>
+</div></div>
+  inline void ProcessCmdLine::showRegexes()
+  <input id = _233 type = "checkbox"><label class = "drop" for = "_233"></label><div><input id = _233 type = "checkbox"><label class = "drop" for = "_233"></label><div><input id = _233 type = "checkbox"><label class = "drop" for = "_233"></label><div>{
+	  for (auto regex : regexes_)
+	  <input id = _235 type = "checkbox"><label class = "drop" for = "_235"></label><div><input id = _235 type = "checkbox"><label class = "drop" for = "_235"></label><div><input id = _235 type = "checkbox"><label class = "drop" for = "_235"></label><div>{
+		  out_ &lt;&lt; regex &lt;&lt; " ";
+	  }</div>
+  }</div></div></div>
+</div></div>
+<input id = _239 type = "checkbox"><label class = "drop" for = "_239"></label><div><input id = _239 type = "checkbox"><label class = "drop" for = "_239"></label><div><input id = _239 type = "checkbox"><label class = "drop" for = "_239"></label><div>  /*----&lt; maxItems operations &gt;--------------------------------------*/</div></div></div>
+
+  inline void ProcessCmdLine::maxItems(Number maxItems)
+  <input id = _243 type = "checkbox"><label class = "drop" for = "_243"></label><div><input id = _243 type = "checkbox"><label class = "drop" for = "_243"></label><div><input id = _243 type = "checkbox"><label class = "drop" for = "_243"></label><div>{
+    maxItems_ = maxItems;
+  }</div>
+</div></div>
+  inline ProcessCmdLine::Number ProcessCmdLine::maxItems()
+  <input id = _248 type = "checkbox"><label class = "drop" for = "_248"></label><div><input id = _248 type = "checkbox"><label class = "drop" for = "_248"></label><div><input id = _248 type = "checkbox"><label class = "drop" for = "_248"></label><div>{
+    return maxItems_;
+  }</div>
+</div></div>
+  inline void ProcessCmdLine::showMaxItems()
+  <input id = _253 type = "checkbox"><label class = "drop" for = "_253"></label><div><input id = _253 type = "checkbox"><label class = "drop" for = "_253"></label><div><input id = _253 type = "checkbox"><label class = "drop" for = "_253"></label><div>{
+    if(maxItems_ != 0)
+      out_ &lt;&lt; maxItems_ &lt;&lt; " ";
+  }</div>
+</div></div>
+  inline DisplayMode ProcessCmdLine::displayMode()
+  <input id = _259 type = "checkbox"><label class = "drop" for = "_259"></label><div><input id = _259 type = "checkbox"><label class = "drop" for = "_259"></label><div><input id = _259 type = "checkbox"><label class = "drop" for = "_259"></label><div>{
+    return dm_;
+  }</div>
+</div></div>
+  inline bool ProcessCmdLine::isValidRegex(const std::string & regex)
+  <input id = _264 type = "checkbox"><label class = "drop" for = "_264"></label><div><input id = _264 type = "checkbox"><label class = "drop" for = "_264"></label><div><input id = _264 type = "checkbox"><label class = "drop" for = "_264"></label><div>{
+	  bool res = true;
+	  try
+	  <input id = _267 type = "checkbox"><label class = "drop" for = "_267"></label><div><input id = _267 type = "checkbox"><label class = "drop" for = "_267"></label><div><input id = _267 type = "checkbox"><label class = "drop" for = "_267"></label><div>{
+		  std::regex tmp(regex);
+	  }</div>
+	  catch (const std::regex_error& e)</div></div>
+	  <input id = _271 type = "checkbox"><label class = "drop" for = "_271"></label><div><input id = _271 type = "checkbox"><label class = "drop" for = "_271"></label><div><input id = _271 type = "checkbox"><label class = "drop" for = "_271"></label><div>{
+		  (e);
+		  res = false;
+	  }</div>
+	  return res;</div></div>
+  }</div>
+</div></div>
+<input id = _277 type = "checkbox"><label class = "drop" for = "_277"></label><div><input id = _277 type = "checkbox"><label class = "drop" for = "_277"></label><div><input id = _277 type = "checkbox"><label class = "drop" for = "_277"></label><div>  /*----&lt; parseError operation &gt;-------------------------------------*/</div></div></div>
+
+  inline bool ProcessCmdLine::parseError()
+  <input id = _281 type = "checkbox"><label class = "drop" for = "_281"></label><div><input id = _281 type = "checkbox"><label class = "drop" for = "_281"></label><div><input id = _281 type = "checkbox"><label class = "drop" for = "_281"></label><div>{
+    return parseError_;
+  }</div>
+</div></div>
+
+ 
+  inline ProcessCmdLine::ProcessCmdLine(std::vector&lt;std::string&gt; cmdline, std::ostream& out) : out_(out)
+  <input id = _288 type = "checkbox"><label class = "drop" for = "_288"></label><div><input id = _288 type = "checkbox"><label class = "drop" for = "_288"></label><div><input id = _288 type = "checkbox"><label class = "drop" for = "_288"></label><div>{
+	  int argc = cmdline.size();
+	  if (argc &lt; 2)
+	  <input id = _291 type = "checkbox"><label class = "drop" for = "_291"></label><div><input id = _291 type = "checkbox"><label class = "drop" for = "_291"></label><div><input id = _291 type = "checkbox"><label class = "drop" for = "_291"></label><div>{
+		  out &lt;&lt; "\n  command line parse error";
+		  //usage();
+		  parseError_ = true;
+		  return;
+	  }</div>
+</div></div>
+	  path_ = cmdline[1];
+	  std::cout &lt;&lt; path_ &lt;&lt; std::endl;
+	  for (int i = 2; i &lt; argc; ++i)
+	  <input id = _301 type = "checkbox"><label class = "drop" for = "_301"></label><div><input id = _301 type = "checkbox"><label class = "drop" for = "_301"></label><div><input id = _301 type = "checkbox"><label class = "drop" for = "_301"></label><div>{
+		  if (cmdline[i][0] == '/')
+		  <input id = _303 type = "checkbox"><label class = "drop" for = "_303"></label><div><input id = _303 type = "checkbox"><label class = "drop" for = "_303"></label><div><input id = _303 type = "checkbox"><label class = "drop" for = "_303"></label><div>{
+			  std::string opt(cmdline[i]);
+			  opt = opt.substr(1);
+			  if (opt == "demo")
+				  dm_ = DisplayMode::Demo;
+			  else if (opt == "debug")
+				  dm_ = DisplayMode::Debug;
+			  options_.push_back(opt);
+		  }</div>
+		  else</div></div>
+		  <input id = _313 type = "checkbox"><label class = "drop" for = "_313"></label><div><input id = _313 type = "checkbox"><label class = "drop" for = "_313"></label><div><input id = _313 type = "checkbox"><label class = "drop" for = "_313"></label><div>{
+			  int number = atoi(cmdline[i].c_str());
+			  if (number &gt; 0)
+			  <input id = _316 type = "checkbox"><label class = "drop" for = "_316"></label><div><input id = _316 type = "checkbox"><label class = "drop" for = "_316"></label><div><input id = _316 type = "checkbox"><label class = "drop" for = "_316"></label><div>{
+				  maxItems_ = number;
+			  }</div>
+			  else if (isValidRegex(cmdline[i]))</div></div>
+			  <input id = _320 type = "checkbox"><label class = "drop" for = "_320"></label><div><input id = _320 type = "checkbox"><label class = "drop" for = "_320"></label><div><input id = _320 type = "checkbox"><label class = "drop" for = "_320"></label><div>{
+				  regexes_.push_back(cmdline[i]);
+			  }</div>
+			  else</div></div>
+			  <input id = _324 type = "checkbox"><label class = "drop" for = "_324"></label><div><input id = _324 type = "checkbox"><label class = "drop" for = "_324"></label><div><input id = _324 type = "checkbox"><label class = "drop" for = "_324"></label><div>{
+				  patterns_.push_back(cmdline[i]);
+			  }</div>
+		  }</div></div></div>
+		  </div></div>
+	  }</div>
+	  std::cout &lt;&lt; "Done with CmdProcessing\n Path: "&lt;&lt; path_ &lt;&lt; std::endl;</div></div>
+  }</div>
+</div></div>
+<input id = _332 type = "checkbox"><label class = "drop" for = "_332"></label><div><input id = _332 type = "checkbox"><label class = "drop" for = "_332"></label><div><input id = _332 type = "checkbox"><label class = "drop" for = "_332"></label><div>  /*----&lt; command line operations &gt;----------------------------------*/</div></div></div>
+
+  inline ProcessCmdLine::ProcessCmdLine(int argc, char** argv, std::ostream& out) : out_(out)
+  <input id = _336 type = "checkbox"><label class = "drop" for = "_336"></label><div><input id = _336 type = "checkbox"><label class = "drop" for = "_336"></label><div><input id = _336 type = "checkbox"><label class = "drop" for = "_336"></label><div>{
+	if (argc &lt; 2)
+    <input id = _338 type = "checkbox"><label class = "drop" for = "_338"></label><div><input id = _338 type = "checkbox"><label class = "drop" for = "_338"></label><div><input id = _338 type = "checkbox"><label class = "drop" for = "_338"></label><div>{
+      out &lt;&lt; "\n  command line parse error";
+      //usage();
+      parseError_ = true;
+      return;
+    }</div>
+	</div></div>
+	//path_ = *(argv + 1);
+    path_ = argv[1];
+	std::cout &lt;&lt; path_ &lt;&lt; std::endl;
+    for (int i = 2; i &lt; argc; ++i)
+    <input id = _349 type = "checkbox"><label class = "drop" for = "_349"></label><div><input id = _349 type = "checkbox"><label class = "drop" for = "_349"></label><div><input id = _349 type = "checkbox"><label class = "drop" for = "_349"></label><div>{
+      if (argv[i][0] == '/')
+      <input id = _351 type = "checkbox"><label class = "drop" for = "_351"></label><div><input id = _351 type = "checkbox"><label class = "drop" for = "_351"></label><div><input id = _351 type = "checkbox"><label class = "drop" for = "_351"></label><div>{
+        std::string opt(argv[i]);
+        opt = opt.substr(1);
+        if (opt == "demo")
+          dm_ = DisplayMode::Demo;
+        else if (opt == "debug")
+          dm_ = DisplayMode::Debug;
+        options_.push_back(opt);
+      }</div>
+      else</div></div>
+      <input id = _361 type = "checkbox"><label class = "drop" for = "_361"></label><div><input id = _361 type = "checkbox"><label class = "drop" for = "_361"></label><div><input id = _361 type = "checkbox"><label class = "drop" for = "_361"></label><div>{
+        int number = atoi(argv[i]);
+        if (number &gt; 0)
+        <input id = _364 type = "checkbox"><label class = "drop" for = "_364"></label><div><input id = _364 type = "checkbox"><label class = "drop" for = "_364"></label><div><input id = _364 type = "checkbox"><label class = "drop" for = "_364"></label><div>{
+          maxItems_ = number;
+        }</div>
+        else if (isValidRegex(argv[i]))</div></div>
+        <input id = _368 type = "checkbox"><label class = "drop" for = "_368"></label><div><input id = _368 type = "checkbox"><label class = "drop" for = "_368"></label><div><input id = _368 type = "checkbox"><label class = "drop" for = "_368"></label><div>{
+          regexes_.push_back(argv[i]);
+        }</div>
+        else</div></div>
+        <input id = _372 type = "checkbox"><label class = "drop" for = "_372"></label><div><input id = _372 type = "checkbox"><label class = "drop" for = "_372"></label><div><input id = _372 type = "checkbox"><label class = "drop" for = "_372"></label><div>{
+          patterns_.push_back(argv[i]);
+        }</div>
+      }</div></div></div>
+	  std::cout &lt;&lt; "Done with CmdProcessing" &lt;&lt; std::endl;</div></div>
+    }</div>
+</div></div>
+    // after processing, if both display modes are given, put parse error
+    if (hasOption("demo") && hasOption("debug"))
+      parseError_ = true;
+  }</div>
+</div></div>
+  inline void ProcessCmdLine::showCmdLine(int argc, char** argv)
+  <input id = _385 type = "checkbox"><label class = "drop" for = "_385"></label><div><input id = _385 type = "checkbox"><label class = "drop" for = "_385"></label><div><input id = _385 type = "checkbox"><label class = "drop" for = "_385"></label><div>{
+    if (argc &gt; 2)
+    <input id = _387 type = "checkbox"><label class = "drop" for = "_387"></label><div><input id = _387 type = "checkbox"><label class = "drop" for = "_387"></label><div><input id = _387 type = "checkbox"><label class = "drop" for = "_387"></label><div>{
+      out_ &lt;&lt; "  empty";
+      return;
+    }</div>
+    for (int i = 0; i &lt; argc; ++i)</div></div>
+    <input id = _392 type = "checkbox"><label class = "drop" for = "_392"></label><div><input id = _392 type = "checkbox"><label class = "drop" for = "_392"></label><div><input id = _392 type = "checkbox"><label class = "drop" for = "_392"></label><div>{
+      if (argv[i] == "0")
+        continue;
+      if(argv[i][0] == '/')
+      <input id = _396 type = "checkbox"><label class = "drop" for = "_396"></label><div><input id = _396 type = "checkbox"><label class = "drop" for = "_396"></label><div><input id = _396 type = "checkbox"><label class = "drop" for = "_396"></label><div>{ 
+        //out_ &lt;&lt; "/" + char(argv[i][1]) &lt;&lt; " ";
+      }</div>
+      else</div></div>
+      <input id = _400 type = "checkbox"><label class = "drop" for = "_400"></label><div><input id = _400 type = "checkbox"><label class = "drop" for = "_400"></label><div><input id = _400 type = "checkbox"><label class = "drop" for = "_400"></label><div>{
+        out_ &lt;&lt; argv[i] &lt;&lt; " ";
+      }</div>
+    }</div></div></div>
+  }</div></div></div>
+</div></div>
+  inline void ProcessCmdLine::showCmdLine()
+  <input id = _407 type = "checkbox"><label class = "drop" for = "_407"></label><div><input id = _407 type = "checkbox"><label class = "drop" for = "_407"></label><div><input id = _407 type = "checkbox"><label class = "drop" for = "_407"></label><div>{
+    if (path_ == "" && options_.size() == 0 && patterns_.size() == 0)
+    <input id = _409 type = "checkbox"><label class = "drop" for = "_409"></label><div><input id = _409 type = "checkbox"><label class = "drop" for = "_409"></label><div><input id = _409 type = "checkbox"><label class = "drop" for = "_409"></label><div>{
+      out_ &lt;&lt; "empty";
+      return;
+    }</div>
+    showPath();</div></div>
+    preface("", false);
+    showOptions();
+    preface("", false);
+    showPatterns();
+    preface("", false);
+    showMaxItems();
+  }</div>
+</div></div>
+  inline void ProcessCmdLine::usage(const Usage& usage)
+  <input id = _423 type = "checkbox"><label class = "drop" for = "_423"></label><div><input id = _423 type = "checkbox"><label class = "drop" for = "_423"></label><div><input id = _423 type = "checkbox"><label class = "drop" for = "_423"></label><div>{
+    usage_ = usage;
+  }</div>
+</div></div>
+  inline void ProcessCmdLine::usage()
+  <input id = _428 type = "checkbox"><label class = "drop" for = "_428"></label><div><input id = _428 type = "checkbox"><label class = "drop" for = "_428"></label><div><input id = _428 type = "checkbox"><label class = "drop" for = "_428"></label><div>{
+    out_ &lt;&lt; usage_;
+  }</div>
+</div></div>
+  /////////////////////////////////////////////////////////////////////
+  // Converter class
+  // - supports converting unspecified types to and from strings
+  // - a type is convertible if it provides insertion and extraction
+  //   operators
+
+  template &lt;typename T&gt;
+  class Converter
+  <input id = _440 type = "checkbox"><label class = "drop" for = "_440"></label><div><input id = _440 type = "checkbox"><label class = "drop" for = "_440"></label><div><input id = _440 type = "checkbox"><label class = "drop" for = "_440"></label><div>{
+  public:
+    static std::string toString(const T& t);
+    static T toValue(const std::string& src);
+  };
+  //----&lt; convert t to a string &gt;--------------------------------------</div></div></div>
+
+  template &lt;typename T&gt;
+  std::string Converter&lt;T&gt;::toString(const T& t)
+  <input id = _449 type = "checkbox"><label class = "drop" for = "_449"></label><div><input id = _449 type = "checkbox"><label class = "drop" for = "_449"></label><div><input id = _449 type = "checkbox"><label class = "drop" for = "_449"></label><div>{
+    std::ostringstream out;
+    out &lt;&lt; t;
+    return out.str();
+  }</div>
+  //----&lt; convert a string to an instance of T &gt;-----------------------</div></div>
+<input id = _457 type = "checkbox"><label class = "drop" for = "_457"></label><div><input id = _457 type = "checkbox"><label class = "drop" for = "_457"></label><div><input id = _457 type = "checkbox"><label class = "drop" for = "_457"></label><div>  /*
+  *  - the string must have been generated by Converter&lt;T&gt;::toString(const T& t)
+  *  - T::operator&gt;&gt; must be the inverse of T::operator&lt;&lt; 
+  */</div></div></div>
+  template&lt;typename T&gt;
+  T Converter&lt;T&gt;::toValue(const std::string& src)
+  <input id = _461 type = "checkbox"><label class = "drop" for = "_461"></label><div><input id = _461 type = "checkbox"><label class = "drop" for = "_461"></label><div><input id = _461 type = "checkbox"><label class = "drop" for = "_461"></label><div>{
+    std::istringstream in(src);
+    T t;
+    in &gt;&gt; t;
+    return t;
+  }</div>
+</div></div>
+  ///////////////////////////////////////////////////////////////////////
+  // Box class
+  // - wraps primitive type in class
+  // - preserves primitive syntax
+
+  template&lt;typename T&gt;
+  class Box
+  <input id = _475 type = "checkbox"><label class = "drop" for = "_475"></label><div><input id = _475 type = "checkbox"><label class = "drop" for = "_475"></label><div><input id = _475 type = "checkbox"><label class = "drop" for = "_475"></label><div>{
+  public:
+    Box() : primitive_(T()) <input id = _477 type = "checkbox"><label class = "drop" for = "_477"></label><div><input id = _477 type = "checkbox"><label class = "drop" for = "_477"></label><div><input id = _477 type = "checkbox"><label class = "drop" for = "_477"></label><div>{}</div>
+    Box(const T& t) : primitive_(t) <input id = _478 type = "checkbox"><label class = "drop" for = "_478"></label><div><input id = _478 type = "checkbox"><label class = "drop" for = "_478"></label><div><input id = _478 type = "checkbox"><label class = "drop" for = "_478"></label><div>{}</div></div></div>
+    operator T&() <input id = _479 type = "checkbox"><label class = "drop" for = "_479"></label><div><input id = _479 type = "checkbox"><label class = "drop" for = "_479"></label><div><input id = _479 type = "checkbox"><label class = "drop" for = "_479"></label><div>{ return primitive_; }</div></div></div>
+    T& operator=(const T& t) <input id = _480 type = "checkbox"><label class = "drop" for = "_480"></label><div><input id = _480 type = "checkbox"><label class = "drop" for = "_480"></label><div><input id = _480 type = "checkbox"><label class = "drop" for = "_480"></label><div>{ primitive_ = t; return primitive_; }</div></div></div>
+  private:</div></div>
+    T primitive_;
+  };
+</div></div></div>
+  ///////////////////////////////////////////////////////////////////////
+  // ToXml interface
+  // - defines language for creating XML elements
+
+  struct ToXml
+  <input id = _490 type = "checkbox"><label class = "drop" for = "_490"></label><div><input id = _490 type = "checkbox"><label class = "drop" for = "_490"></label><div><input id = _490 type = "checkbox"><label class = "drop" for = "_490"></label><div>{
+    virtual std::string toXml(const std::string& tag) = 0;
+    virtual ~ToXml() <input id = _492 type = "checkbox"><label class = "drop" for = "_492"></label><div><input id = _492 type = "checkbox"><label class = "drop" for = "_492"></label><div><input id = _492 type = "checkbox"><label class = "drop" for = "_492"></label><div>{};</div>
+  };</div></div>
+</div></div></div>
+  ///////////////////////////////////////////////////////////////////////
+  // PersistFactory&lt;T&gt; class
+  // - wraps an instance of user-defined type
+  // - preserves semantics of user-defined type
+  // - adds toXml("tag") method
+
+  template&lt;typename T&gt;
+  class PersistFactory : public T, ToXml
+  <input id = _503 type = "checkbox"><label class = "drop" for = "_503"></label><div><input id = _503 type = "checkbox"><label class = "drop" for = "_503"></label><div><input id = _503 type = "checkbox"><label class = "drop" for = "_503"></label><div>{
+  public:
+    PersistFactory() = default;
+    PersistFactory(const T& t)
+    <input id = _507 type = "checkbox"><label class = "drop" for = "_507"></label><div><input id = _507 type = "checkbox"><label class = "drop" for = "_507"></label><div><input id = _507 type = "checkbox"><label class = "drop" for = "_507"></label><div>{
+      T::operator=(t);
+    }</div>
+    std::string toXml(const std::string& tag)</div></div>
+    <input id = _511 type = "checkbox"><label class = "drop" for = "_511"></label><div><input id = _511 type = "checkbox"><label class = "drop" for = "_511"></label><div><input id = _511 type = "checkbox"><label class = "drop" for = "_511"></label><div>{
+      std::ostringstream out;
+      out &lt;&lt; "&lt;" &lt;&lt; tag &lt;&lt; "&gt;" &lt;&lt; *this &lt;&lt; "&lt;/" &lt;&lt; tag &lt;&lt; "&gt;";
+      return out.str();
+    }</div>
+  };</div></div>
+}</div></div></div></div></div></div>
+    </pre>
+  </body>
+</html>

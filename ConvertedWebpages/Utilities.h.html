@@ -1,0 +1,126 @@
+<DOCTYPE !HTML></div>
+<html>
+  <head>
+    <Title>Utilities.h</Title>
+    <style>
+      body <input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div>{
+        padding:15px 40px;
+        font-family: Consolas;
+        font-size: 1.25em;
+        font-weight: normal;
+      }</div>
+      </style>
+      <link rel="stylesheet"  href="../foldingformat.css" />
+  </head>
+
+  <body>
+    <pre>
+
+#ifndef UTILITIES_H
+#define UTILITIES_H
+<input id = _28 type = "checkbox"><label class = "drop" for = "_28"></label><div>///////////////////////////////////////////////////////////////////////
+// Utilities.h - small, generally useful, helper classes             //
+// ver 1.4                                                           //
+// Language:    C++, Visual Studio 2015                              //
+// Platform:    Dell XPS 8900, Windows 10                            //
+// Application: Most Projects, CSE687 - Object Oriented Design       //
+// Author:      Jim Fawcett, Syracuse University, CST 4-187          //
+//              jfawcett@twcny.rr.com                                //
+///////////////////////////////////////////////////////////////////////</div>
+<input id = _62 type = "checkbox"><label class = "drop" for = "_62"></label><div>/*
+* Package Operations:
+* -------------------
+* This package provides classes StringHelper and Converter and a global
+* function putline().  This class will be extended continuously for 
+* awhile to provide convenience functions for general C++ applications.
+*
+* Build Process:
+* --------------
+* Required Files: Utilities.h, Utilities.cpp
+*
+* Build Command: devenv Utilities.sln /rebuild debug
+*
+* Maintenance History:
+* --------------------
+* ver 1.4 : 26 Feb 2017
+* - changed StringHelper::split to use isspace from &lt;locale&gt; instead of &lt;cctype&gt;
+* ver 1.3 : 12 Aug 2016
+* - added overloads of title functions for std::ostringstreams
+* ver 1.2 : 10 Aug 2016
+* - added new function StringHelper::sTitle(...)
+* - changed the way string arguments are passed to each of the
+*   title functions
+* ver 1.1 : 06 Feb 2015
+* - fixed bug in split which turns a comma separated string into
+*   a vector of tokens.
+* - added comments
+* ver 1.0 : 05 Feb 2016
+* - first release
+*
+* Planned Additions and Changes:
+* ------------------------------
+* - none yet
+*/</div>
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;sstream&gt;
+#include &lt;functional&gt;
+
+
+namespace Utilities
+<input id = _72 type = "checkbox"><label class = "drop" for = "_72"></label><div>{
+  class test
+  <input id = _74 type = "checkbox"><label class = "drop" for = "_74"></label><div>{
+  public:
+    std::vector&lt;std::string&gt; publicVector;
+  };
+</div>
+  class StringHelper
+  <input id = _80 type = "checkbox"><label class = "drop" for = "_80"></label><div>{
+  public:
+    static std::vector&lt;std::string&gt; split(const std::string& src);
+    static void Title(std::string src, std::ostream&  out = std::cout);
+    static void Title(std::string src, std::ostringstream& out);
+    static void title(std::string src, std::ostream& out = std::cout);
+    static void title(std::string src, std::ostringstream& out);
+    static void sTitle(
+      std::string src, size_t offset, size_t width, std::ostream& out = std::cout, char underline = '-'
+    );
+    static void sTitle(
+      std::string src, size_t offset, size_t width, std::ostringstream& out, char underline = '-'
+    );
+  };
+</div>
+  void putline();
+
+
+  template &lt;typename T&gt;
+  class Converter
+  <input id = _100 type = "checkbox"><label class = "drop" for = "_100"></label><div>{
+  public:
+    static std::string toString(const T& t);
+    static T toValue(const std::string& src);
+  };
+</div>
+  template &lt;typename T&gt;
+  std::string Converter&lt;T&gt;::toString(const T& t)
+  <input id = _108 type = "checkbox"><label class = "drop" for = "_108"></label><div>{
+    std::ostringstream out;
+    out &lt;&lt; t;
+    return out.str();
+  }</div>
+
+  template&lt;typename T&gt;
+  T Converter&lt;T&gt;::toValue(const std::string& src)
+  <input id = _116 type = "checkbox"><label class = "drop" for = "_116"></label><div>{
+    std::istringstream in(src);
+    T t;
+    in &gt;&gt; t;
+    return t;
+  }</div>
+}</div>
+#endif
+    </pre>
+  </body>
+</html>

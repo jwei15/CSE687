@@ -1,0 +1,5 @@
+﻿  Logger.cpp
+  Comm.cpp
+e:\687\project4_jwei15\comm\utilities\filesystem\filesystem.h : warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+  Generating Code...
+  MsgPassingComm.vcxproj -> E:\687\Project4_jwei15\Debug\MsgPassingComm.exe

@@ -1,0 +1,218 @@
+<DOCTYPE !HTML></div>
+<html>
+  <head>
+    <Title>ScopeStack.h</Title>
+    <style>
+      body <input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div>{
+        padding:15px 40px;
+        font-family: Consolas;
+        font-size: 1.25em;
+        font-weight: normal;
+      }</div>
+      </style>
+      <link rel="stylesheet"  href="../foldingformat.css" />
+  </head>
+
+  <body>
+    <h3>Dependencies: 
+      <a href="Utilities.h.html">Utilities.h</a>
+    </h3>    <pre>
+#ifndef SCOPESTACK_H
+#define SCOPESTACK_H
+<input id = _29 type = "checkbox"><label class = "drop" for = "_29"></label><div>/////////////////////////////////////////////////////////////////////////////
+// ScopeStack.h - implements template stack holding specified element type //
+// ver 2.2                                                                 //
+// Language:      Visual C++ 2010, SP1                                     //
+// Platform:      Dell Precision T7400, Win 7 Pro SP1                      //
+// Application:   Code Analysis Research                                   //
+// Author:        Jim Fawcett, CST 4-187, Syracuse University              //
+//                (315) 443-3948, jfawcett@twcny.rr.com                    //
+/////////////////////////////////////////////////////////////////////////////</div>
+<input id = _67 type = "checkbox"><label class = "drop" for = "_67"></label><div>/*
+  Package Operations:
+  ===================
+  This package contains one class: ScopeStack&lt;element&gt;.  The element type
+  is an application specific type designed to hold whatever information you
+  need to stack.
+
+  Throws std::exception if stack is popped or peeked when empty.
+
+  Public Interface:
+  =================
+  ScopeStack&lt;element&gt; stack;
+  // define some element type
+  element elem;
+  stack.push(elem);
+  element popped = stack.pop();
+
+  Required Files:
+  ===============
+  ScopeStack.h, ScopeStack.cpp
+
+  Build Command:
+  ==============
+  devenv ScopeStack.sln /rebuild debug
+
+  Maintenance History:
+  ====================
+  ver 2.2 : 29 Oct 2016
+  - added throw when popping or peeking empty stack
+  ver 2.1 : 02 Jun 2011
+  - changed ScopeStack type to single template argument intended to be
+    an application specific type (usually a struct that holds whatever
+    is needed)
+  ver 2.0 : 02 Feb 2011
+  - fixed bug in pop() method found by Drumil Bhattad
+  ver 1.0 : 31 Jan 2011
+  - first release
+*/</div>
+#include &lt;list&gt;
+
+#include "../Utilities/Utilities.h"
+
+// element is a application specific type.  It must provide a function:
+// std::string show() that returns a string display of its parts. see
+// test stub for an example.
+
+namespace CodeAnalysis
+<input id = _78 type = "checkbox"><label class = "drop" for = "_78"></label><div>{
+  template&lt;typename element&gt;
+  class ScopeStack <input id = _80 type = "checkbox"><label class = "drop" for = "_80"></label><div>{
+  public:
+    //using Rslt = Logging::StaticLogger&lt;0&gt;;    // show program results
+    //using Demo = Logging::StaticLogger&lt;1&gt;;    // show demonstration outputs
+    //using Dbug = Logging::StaticLogger&lt;2&gt;;    // show debugging outputs
+    typename typedef std::list&lt;element&gt;::iterator iterator;
+
+    ScopeStack();
+    void push(const element& item);
+    element pop();
+    element& top();
+    element& predOfTop();
+    size_t size();
+    iterator begin();
+    iterator end();
+  private:
+    std::list&lt;element&gt; stack;
+    element dbElement;
+  };
+</div>
+  template&lt;typename element&gt;
+  ScopeStack&lt;element&gt;::ScopeStack() <input id = _101 type = "checkbox"><label class = "drop" for = "_101"></label><div>{}</div>
+
+  template&lt;typename element&gt;
+  typename inline size_t ScopeStack&lt;element&gt;::size() <input id = _104 type = "checkbox"><label class = "drop" for = "_104"></label><div>{ return stack.size(); }</div>
+
+  template&lt;typename element&gt;
+  typename inline ScopeStack&lt;element&gt;::iterator ScopeStack&lt;element&gt;::begin() <input id = _107 type = "checkbox"><label class = "drop" for = "_107"></label><div>{ return stack.begin(); }</div>
+
+  template&lt;typename element&gt;
+  typename inline ScopeStack&lt;element&gt;::iterator ScopeStack&lt;element&gt;::end() <input id = _110 type = "checkbox"><label class = "drop" for = "_110"></label><div>{ return stack.end(); }</div>
+
+  template&lt;typename element&gt;
+  void ScopeStack&lt;element&gt;::push(const element& item)
+  <input id = _114 type = "checkbox"><label class = "drop" for = "_114"></label><div>{
+    //Demo::flush();
+    stack.push_back(item);
+    //Dbug::write("\n--- stack size = " + Utilities::Converter&lt;size_t&gt;::toString(size()) + " ---");
+    //Dbug::flush();
+  }</div>
+
+  template&lt;typename element&gt;
+  element ScopeStack&lt;element&gt;::pop()
+  <input id = _123 type = "checkbox"><label class = "drop" for = "_123"></label><div>{
+    if (stack.size() == 0)
+    <input id = _125 type = "checkbox"><label class = "drop" for = "_125"></label><div>{
+      throw std::exception("-- attempting to pop empty stack --");
+    }</div>
+    element item = stack.back();
+    stack.pop_back();    
+    //Dbug::write("\n--- stack size = " + Utilities::Converter&lt;size_t&gt;::toString(size()) + " ---");
+    //Dbug::flush();
+
+    return item;
+  }</div>
+
+  template&lt;typename element&gt;
+  element& ScopeStack&lt;element&gt;::top()
+  <input id = _138 type = "checkbox"><label class = "drop" for = "_138"></label><div>{
+    if (stack.size() == 0)
+    <input id = _140 type = "checkbox"><label class = "drop" for = "_140"></label><div>{
+      throw std::exception("-- attempting to peek top on empty stack --");
+    }</div>
+    return stack.back();
+  }</div>
+
+  template&lt;typename element&gt;
+  element& ScopeStack&lt;element&gt;::predOfTop()
+  <input id = _148 type = "checkbox"><label class = "drop" for = "_148"></label><div>{
+    if (size() &lt; 2)
+    <input id = _150 type = "checkbox"><label class = "drop" for = "_150"></label><div>{
+      throw std::exception("-- predOfTop() called on stack with less than two elements --");
+    }</div>
+    iterator iter = --(--end());
+    return *iter;
+  }</div>
+
+  template&lt;typename element&gt;
+  void showStack(ScopeStack&lt;element&gt;& stack, bool indent = true)
+  <input id = _159 type = "checkbox"><label class = "drop" for = "_159"></label><div>{
+    if (stack.size() == 0)
+    <input id = _161 type = "checkbox"><label class = "drop" for = "_161"></label><div>{
+      std::cout &lt;&lt; "\n  ScopeStack is empty";
+      return;
+    }</div>
+    typename ScopeStack&lt;element&gt;::iterator iter = stack.begin();
+    while (iter != stack.end())
+    <input id = _167 type = "checkbox"><label class = "drop" for = "_167"></label><div>{
+      std::string strIndent = std::string(2 * stack.size(), ' ');
+      if (!indent)
+        strIndent = "";
+      element temp = *iter;
+      std::cout &lt;&lt; "\n  " &lt;&lt; strIndent &lt;&lt; temp-&gt;show();
+      ++iter;
+    }</div>
+  }</div>
+
+  template&lt;typename element&gt;
+  void showStack(ScopeStack&lt;element*&gt;& stack, bool indent = true)
+  <input id = _179 type = "checkbox"><label class = "drop" for = "_179"></label><div>{
+    if (stack.size() == 0)
+    <input id = _181 type = "checkbox"><label class = "drop" for = "_181"></label><div>{
+      std::cout &lt;&lt; "\n  ScopeStack is empty";
+      return;
+    }</div>
+    typename ScopeStack&lt;element*&gt;::iterator iter = stack.begin();
+    while (iter != stack.end())
+    <input id = _187 type = "checkbox"><label class = "drop" for = "_187"></label><div>{
+      std::string strIndent = std::string(2 * stack.size(), ' ');
+      if (!indent)
+        strIndent = "";
+      std::cout &lt;&lt; "\n  " &lt;&lt; strIndent &lt;&lt; ((*iter)-&gt;show());
+      ++iter;
+    }</div>
+  }</div>
+  //----&lt; walk tree of element nodes &gt;---------------------------------
+
+  template&lt;typename element&gt;
+  void TreeWalk(element* pItem, bool details = false)
+  <input id = _199 type = "checkbox"><label class = "drop" for = "_199"></label><div>{
+    static std::string path;
+    static size_t indentLevel = 0;
+    std::ostringstream out;
+    out &lt;&lt; "\n In TreeWalk\n " &lt;&lt; std::string(2 * indentLevel, ' ') &lt;&lt; pItem-&gt;show();
+    std::cout &lt;&lt;out.str();
+    auto iter = pItem-&gt;children_.begin();
+    ++indentLevel;
+    while (iter != pItem-&gt;children_.end())
+    <input id = _208 type = "checkbox"><label class = "drop" for = "_208"></label><div>{
+      TreeWalk(*iter);
+      ++iter;
+    }</div>
+    --indentLevel;
+  }</div>
+}</div>
+#endif
+    </pre>
+  </body>
+</html>

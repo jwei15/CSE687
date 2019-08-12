@@ -1,0 +1,14 @@
+E:\687\InteropHelpDemo\CSharpClient\bin\Debug\CSharpClient.exe.config
+E:\687\InteropHelpDemo\CSharpClient\bin\Debug\CSharpClient.exe
+E:\687\InteropHelpDemo\CSharpClient\bin\Debug\CSharpClient.pdb
+E:\687\InteropHelpDemo\CSharpClient\bin\Debug\Translator.dll
+E:\687\InteropHelpDemo\CSharpClient\bin\Debug\Translator.pdb
+E:\687\InteropHelpDemo\CSharpClient\obj\Debug\CSharpClient.csprojAssemblyReference.cache
+E:\687\InteropHelpDemo\CSharpClient\obj\Debug\CSharpClient.csproj.CoreCompileInputs.cache
+E:\687\InteropHelpDemo\CSharpClient\obj\Debug\CSharpClient.csproj.CopyComplete
+E:\687\InteropHelpDemo\CSharpClient\obj\Debug\CSharpClient.exe
+E:\687\InteropHelpDemo\CSharpClient\obj\Debug\CSharpClient.pdb
+E:\687\Project3_My\InteropHelpDemo\CSharpClient\obj\Debug\CSharpClient.csprojAssemblyReference.cache
+E:\687\Project3_My\InteropHelpDemo\CSharpClient\obj\Debug\CSharpClient.csproj.CoreCompileInputs.cache
+E:\687\Project3_My\InteropHelpDemo\CSharpClient\obj\Debug\CSharpClient.exe
+E:\687\Project3_My\InteropHelpDemo\CSharpClient\obj\Debug\CSharpClient.pdb

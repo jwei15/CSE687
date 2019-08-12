@@ -1,0 +1,12 @@
+E:\687\NavigatorClientServer\Environment\bin\Debug\Environment.dll
+E:\687\NavigatorClientServer\Environment\bin\Debug\Environment.pdb
+E:\687\NavigatorClientServer\Environment\obj\Debug\Environment.csproj.CoreCompileInputs.cache
+E:\687\NavigatorClientServer\Environment\obj\Debug\Environment.dll
+E:\687\NavigatorClientServer\Environment\obj\Debug\Environment.pdb
+E:\687\NavigatorClientServer\Environment\obj\Debug\Environment.csprojAssemblyReference.cache
+E:\687\Project4_jwei15\NavigatorClientServer\Environment\bin\Debug\Environment.dll
+E:\687\Project4_jwei15\NavigatorClientServer\Environment\bin\Debug\Environment.pdb
+E:\687\Project4_jwei15\NavigatorClientServer\Environment\obj\Debug\Environment.csprojAssemblyReference.cache
+E:\687\Project4_jwei15\NavigatorClientServer\Environment\obj\Debug\Environment.csproj.CoreCompileInputs.cache
+E:\687\Project4_jwei15\NavigatorClientServer\Environment\obj\Debug\Environment.dll
+E:\687\Project4_jwei15\NavigatorClientServer\Environment\obj\Debug\Environment.pdb

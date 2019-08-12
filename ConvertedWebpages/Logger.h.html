@@ -1,0 +1,141 @@
+<DOCTYPE !HTML></div>
+<html>
+  <head>
+    <Title>Logger.h</Title>
+    <style>
+      body <input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div>{
+        padding:15px 40px;
+        font-family: Consolas;
+        font-size: 1.25em;
+        font-weight: normal;
+      }</div>
+      </style>
+      <link rel="stylesheet"  href="../foldingformat.css" />
+  </head>
+
+  <body>
+    <h3>Dependencies: 
+      <a href="Cpp11-BlockingQueue.h.html">Cpp11-BlockingQueue.h</a>
+    </h3>    <pre>
+#ifndef LOGGER_H
+#define LOGGER_H
+<input id = _32 type = "checkbox"><label class = "drop" for = "_32"></label><div>/////////////////////////////////////////////////////////////////////
+// Logger.h - log text messages to std::ostream                    //
+// ver 1.2                                                         //
+//-----------------------------------------------------------------//
+// Jim Fawcett (c) copyright 2015                                  //
+// All rights granted provided this copyright notice is retained   //
+//-----------------------------------------------------------------//
+// Language:    C++, Visual Studio 2015                            //
+// Application: Several Projects, CSE687 - Object Oriented Design  //
+// Author:      Jim Fawcett, Syracuse University, CST 4-187        //
+//              jfawcett@twcny.rr.com                              //
+/////////////////////////////////////////////////////////////////////</div>
+<input id = _74 type = "checkbox"><label class = "drop" for = "_74"></label><div>/*
+* Package Operations:
+* -------------------
+* This package supports logging for multiple concurrent clients to a
+* single std::ostream.  It does this be enqueuing messages in a
+* blocking queue and dequeuing with a single thread that writes to
+* the std::ostream.
+*
+* It provides two logging classes, a non-template Logger class with 
+* instance methods, and a template class StaticLogger&lt;int&gt; with static 
+* methods.
+*
+* In most of my code I use the following definitions:
+* 
+*   using Rslt = StaticLogger&lt;0&gt;;    // show program results
+*   using Demo = StaticLogger&lt;1&gt;;    // show demonstration outputs
+*   using Dbug = StaticLogger&lt;2&gt;;    // show debugging outputs
+*
+* That allows a user to determine the kinds of outputs the program
+* presents based on which of these loggers are started, e.g., by
+* changing only a couple of lines of code.
+*
+* Build Process:
+* --------------
+* Required Files: Logger.h, Logger.cpp, Utilities.h, Utilities.cpp
+*
+* Build Command: devenv logger.sln /rebuild debug
+*
+* Maintenance History:
+* --------------------
+* ver 1.2 : 27 Aug 2016
+* - added flushing of streams in Logger::flush()
+* - call thread join on stop instead of spin locking
+* ver 1.1 : 06 Aug 2016
+* - added member function flush() to wait for output to complete
+* ver 1.0 : 22 Feb 2016
+* - first release
+*
+* Planned Additions and Changes:
+* ------------------------------
+* - fix pause locking
+*/</div>
+
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;thread&gt;
+#include "../Cpp11-BlockingQueue/Cpp11-BlockingQueue.h"
+
+namespace Logging
+<input id = _84 type = "checkbox"><label class = "drop" for = "_84"></label><div>{
+  class Logger
+  <input id = _86 type = "checkbox"><label class = "drop" for = "_86"></label><div>{
+  public:
+    Logger() <input id = _88 type = "checkbox"><label class = "drop" for = "_88"></label><div>{}</div>
+    void attach(std::ostream* pOut);
+    void start();
+    bool running();
+    void pause(bool doPause);
+    bool paused();
+    void flush();
+    void stop(const std::string& msg = "");
+    void wait();
+    void write(const std::string& msg);
+    void title(const std::string& msg, char underline = '-');
+    ~Logger();
+    Logger(const Logger&) = delete;
+    Logger& operator=(const Logger&) = delete;
+  private:
+    std::thread* _pThr;
+    std::vector&lt;std::ostream*&gt; streams_;
+    Async::BlockingQueue&lt;std::string&gt; _queue;
+    bool _ThreadRunning = false;
+    bool _Paused = false;
+  };
+</div>
+  template&lt;int i&gt;
+  class StaticLogger
+  <input id = _112 type = "checkbox"><label class = "drop" for = "_112"></label><div>{
+  public:
+    static void attach(std::ostream* pOut) <input id = _114 type = "checkbox"><label class = "drop" for = "_114"></label><div>{ _logger.attach(pOut); }</div>
+    static void start() <input id = _115 type = "checkbox"><label class = "drop" for = "_115"></label><div>{ _logger.start(); }</div>
+    static bool running() <input id = _116 type = "checkbox"><label class = "drop" for = "_116"></label><div>{ return _logger.running(); }</div>
+    static void pause(bool doPause) <input id = _117 type = "checkbox"><label class = "drop" for = "_117"></label><div>{ _logger.pause(doPause); }</div>
+    static void paused() <input id = _118 type = "checkbox"><label class = "drop" for = "_118"></label><div>{ return _logger.paused(); }</div>
+    static void flush() <input id = _119 type = "checkbox"><label class = "drop" for = "_119"></label><div>{ _logger.flush(); }</div>
+    static void stop(const std::string& msg = "") <input id = _120 type = "checkbox"><label class = "drop" for = "_120"></label><div>{ _logger.stop(msg); }</div>
+    static void wait() <input id = _121 type = "checkbox"><label class = "drop" for = "_121"></label><div>{ _logger.wait(); }</div>
+    static void write(const std::string& msg) <input id = _122 type = "checkbox"><label class = "drop" for = "_122"></label><div>{ _logger.write(msg); }</div>
+    static void title(const std::string& msg, char underline = '-') <input id = _123 type = "checkbox"><label class = "drop" for = "_123"></label><div>{ _logger.title(msg, underline); }</div>
+    static Logger& instance() <input id = _124 type = "checkbox"><label class = "drop" for = "_124"></label><div>{ return _logger; }</div>
+    StaticLogger(const StaticLogger&) = delete;
+    StaticLogger& operator=(const StaticLogger&) = delete;
+  private:
+    static Logger _logger;
+  };
+</div>
+  template&lt;int i&gt;
+  Logger StaticLogger&lt;i&gt;::_logger;
+
+  using Rslt = Logging::StaticLogger&lt;0&gt;;
+  using Demo = Logging::StaticLogger&lt;1&gt;;
+  using Dbug = Logging::StaticLogger&lt;2&gt;;
+}</div>
+#endif
+    </pre>
+  </body>
+</html>

@@ -1,0 +1,228 @@
+<DOCTYPE !HTML></div></div></div>
+<html>
+  <head>
+    <Title>DirExplorerN.h</Title>
+    <style>
+      body <input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div><input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div><input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div>{
+        padding:15px 40px;
+        font-family: Consolas;
+        font-size: 1.25em;
+        font-weight: normal;
+      }</div>
+      </style></div></div>
+      <link rel="stylesheet"  href="../foldingformat.css" />
+  </head>
+
+  <body>
+    <h3>Dependencies: 
+      <a href="FileSystem.h.html">FileSystem.h</a>
+    </h3>    <pre>
+#pragma once
+<input id = _24 type = "checkbox"><label class = "drop" for = "_24"></label><div>/////////////////////////////////////////////////////////////////////
+// DirExplorerN.h - Naive directory explorer                       //
+// ver 1.3                                                         //
+// Jim Fawcett, CSE687 - Object Oriented Design, Fall 2018         //
+/////////////////////////////////////////////////////////////////////</div>
+<input id = _84 type = "checkbox"><label class = "drop" for = "_84"></label><div><input id = _84 type = "checkbox"><label class = "drop" for = "_84"></label><div><input id = _84 type = "checkbox"><label class = "drop" for = "_84"></label><div>/*
+ * Package Operations:
+ * -------------------
+ * DirExplorerN provides a class, of the same name, that executes a
+ * depth first search of a directory tree rooted at a specified path.
+ * Each time it enters a directory, it invokes its member function
+ * doDir, and for every file in that directory, it invokes doFile.
+ *
+ * We call this a "Naive Directory Explorer" because, while it carries
+ * out its assigned responsibilities well, there is no way to change
+ * what its doDir and doFile functions do, without changing the class
+ * itself.  It would be much better to provide a mechanism to allow
+ * a using application to supply this processing without changing
+ * the Directory Navigator. 
+ *
+ * Other projects in this solution do just that, in different ways.  
+
+ * - DirExplorer-Naive:
+ *     Implements basic processing well, but applications have to
+ *     change its code to affect how files and directories are
+ *     handled.
+ * - DirExplorer-Template:
+ *     Applications provide template class parameters to define file
+ *      and directory processing.
+ * - DirExplorer-Inheritance:
+ *     Applications subclass DirExplorerI, overriding virtual functions
+ *     doFile, doDir, and doQuit to define how files and directories
+ *     are handled, and whether processing should terminate before
+ *     visiting all directories.
+ * - DirExplorer-Events:
+ *     Applications use Event Interfaces, published by DirExplorerE,
+ *     by subscribing event-handler functions, and control terminate
+ *      processing using a plug-in interface.
+ * - DirExplorer-Provider:
+ *     Applications implement a file system provider that implements
+ *     a Provider interface published by DirExplorerP.
+ *     
+ * We'll be using this solution to illustrate techniques for building
+ * flexible software.
+ *
+ * Required Files:
+ * ---------------
+ * DirExplorerN.h, DirExplorerN.cpp
+ * FileSystem.h, FileSystem.cpp      // Directory and Path classes
+ * StringUtilities.h                 // Title function
+ * CodeUtilities.h                   // ProcessCmdLine class
+ *
+ * Maintenance History:
+ * --------------------
+ * ver 1.3 : 19 Aug 2018
+ * - Removed some options to make this version simple.  Those are
+ *   implemented in the more advanced navigators, presented here.
+ * ver 1.2 : 17 Aug 2018
+ * - Moved method definitions to inlines, below the class declaration.
+ * ver 1.1 : 16 Aug 2018
+ * - Made no recursion default, added option /s for recursion.
+ * ver 1.0 : 11 Aug 2018
+ * - first release
+ *
+*/</div></div></div>
+#include &lt;vector&gt;
+#include &lt;iostream&gt;
+#include "../FileSystem/FileSystem.h"
+
+namespace FileSystem
+<input id = _91 type = "checkbox"><label class = "drop" for = "_91"></label><div><input id = _91 type = "checkbox"><label class = "drop" for = "_91"></label><div><input id = _91 type = "checkbox"><label class = "drop" for = "_91"></label><div>{
+  class DirExplorerN
+  <input id = _93 type = "checkbox"><label class = "drop" for = "_93"></label><div><input id = _93 type = "checkbox"><label class = "drop" for = "_93"></label><div><input id = _93 type = "checkbox"><label class = "drop" for = "_93"></label><div>{
+  public:
+    using patterns = std::vector&lt;std::string&gt;;
+
+    static std::string version() <input id = _97 type = "checkbox"><label class = "drop" for = "_97"></label><div><input id = _97 type = "checkbox"><label class = "drop" for = "_97"></label><div><input id = _97 type = "checkbox"><label class = "drop" for = "_97"></label><div>{ return "ver 1.3"; }</div>
+</div></div>
+    DirExplorerN(const std::string& path);
+
+    // set options for analysis
+
+    void addPattern(const std::string& patt);
+    void recurse(bool doRecurse = true);
+
+    // conduct depth first search
+
+    void search();
+    void find(const std::string& path);
+
+    // define what happens when a file or dir is encountered
+
+    void doFile(const std::string& filename);
+    void doDir(const std::string& dirname);
+
+    // extract traversal statistics 
+
+    size_t fileCount();
+    size_t dirCount();
+    void showStats();
+
+  private:
+    std::string path_;
+    patterns patterns_;
+    size_t dirCount_ = 0;
+    size_t fileCount_ = 0;
+    bool recurse_ = false;
+  };
+</div></div></div>
+  //----&lt; construct DirExplorerN instance with default pattern &gt;-----
+
+  inline DirExplorerN::DirExplorerN(const std::string& path) : path_(path)
+  <input id = _133 type = "checkbox"><label class = "drop" for = "_133"></label><div><input id = _133 type = "checkbox"><label class = "drop" for = "_133"></label><div><input id = _133 type = "checkbox"><label class = "drop" for = "_133"></label><div>{
+    patterns_.push_back("*.*");
+  }</div>
+  //----&lt; add specified patterns for selecting file names &gt;----------</div></div>
+
+  inline void DirExplorerN::addPattern(const std::string& patt)
+  <input id = _139 type = "checkbox"><label class = "drop" for = "_139"></label><div><input id = _139 type = "checkbox"><label class = "drop" for = "_139"></label><div><input id = _139 type = "checkbox"><label class = "drop" for = "_139"></label><div>{
+    if (patterns_.size() == 1 && patterns_[0] == "*.*")
+      patterns_.pop_back();
+    patterns_.push_back(patt);
+  }</div>
+  //----&lt; set option to recusively walk dir tree &gt;-------------------</div></div>
+
+  inline void DirExplorerN::recurse(bool doRecurse)
+  <input id = _147 type = "checkbox"><label class = "drop" for = "_147"></label><div><input id = _147 type = "checkbox"><label class = "drop" for = "_147"></label><div><input id = _147 type = "checkbox"><label class = "drop" for = "_147"></label><div>{
+    recurse_ = doRecurse;
+  }</div>
+  //----&lt; start Depth First Search at path held in path_ &gt;-----------</div></div>
+
+  inline void DirExplorerN::search()
+  <input id = _153 type = "checkbox"><label class = "drop" for = "_153"></label><div><input id = _153 type = "checkbox"><label class = "drop" for = "_153"></label><div><input id = _153 type = "checkbox"><label class = "drop" for = "_153"></label><div>{
+    find(path_);
+  }</div>
+  //----&lt; search for directories and their files &gt;-------------------</div></div>
+<input id = _159 type = "checkbox"><label class = "drop" for = "_159"></label><div><input id = _159 type = "checkbox"><label class = "drop" for = "_159"></label><div><input id = _159 type = "checkbox"><label class = "drop" for = "_159"></label><div>  /*
+    Recursively finds all the dirs and files on the specified path,
+    executing doDir when entering a directory and doFile when finding a file
+  */</div></div></div>
+  inline void DirExplorerN::find(const std::string& path)
+  <input id = _162 type = "checkbox"><label class = "drop" for = "_162"></label><div><input id = _162 type = "checkbox"><label class = "drop" for = "_162"></label><div><input id = _162 type = "checkbox"><label class = "drop" for = "_162"></label><div>{
+    // show current directory
+
+    std::string fpath = FileSystem::Path::getFullFileSpec(path);
+    doDir(fpath);
+
+    for (auto patt : patterns_)
+    <input id = _169 type = "checkbox"><label class = "drop" for = "_169"></label><div><input id = _169 type = "checkbox"><label class = "drop" for = "_169"></label><div><input id = _169 type = "checkbox"><label class = "drop" for = "_169"></label><div>{
+      std::vector&lt;std::string&gt; files = FileSystem::Directory::getFiles(fpath, patt);
+      for (auto f : files)
+      <input id = _172 type = "checkbox"><label class = "drop" for = "_172"></label><div><input id = _172 type = "checkbox"><label class = "drop" for = "_172"></label><div><input id = _172 type = "checkbox"><label class = "drop" for = "_172"></label><div>{
+        doFile(f);  // show each file in current directory
+      }</div>
+    }</div></div></div>
+</div></div>
+    std::vector&lt;std::string&gt; dirs = FileSystem::Directory::getDirectories(fpath);
+    for (auto d : dirs)
+    <input id = _179 type = "checkbox"><label class = "drop" for = "_179"></label><div><input id = _179 type = "checkbox"><label class = "drop" for = "_179"></label><div><input id = _179 type = "checkbox"><label class = "drop" for = "_179"></label><div>{
+      if (d == "." || d == "..")
+        continue;
+      std::string dpath = fpath + "\\" + d;
+      if (recurse_)
+      <input id = _184 type = "checkbox"><label class = "drop" for = "_184"></label><div><input id = _184 type = "checkbox"><label class = "drop" for = "_184"></label><div><input id = _184 type = "checkbox"><label class = "drop" for = "_184"></label><div>{
+        find(dpath);   // recurse into subdirectories
+      }</div>
+      else</div></div>
+      <input id = _188 type = "checkbox"><label class = "drop" for = "_188"></label><div><input id = _188 type = "checkbox"><label class = "drop" for = "_188"></label><div><input id = _188 type = "checkbox"><label class = "drop" for = "_188"></label><div>{
+        doDir(dpath);  // show subdirectories
+      }</div>
+    }</div></div></div>
+  }</div></div></div>
+  //----&lt; an application changes to enable specific file ops &gt;-------</div></div>
+
+  inline void DirExplorerN::doFile(const std::string& filename)
+  <input id = _196 type = "checkbox"><label class = "drop" for = "_196"></label><div><input id = _196 type = "checkbox"><label class = "drop" for = "_196"></label><div><input id = _196 type = "checkbox"><label class = "drop" for = "_196"></label><div>{
+    ++fileCount_;
+    std::cout &lt;&lt; "\n  --   " &lt;&lt; filename;
+  }</div>
+  //----&lt; an application changes to enable specific dir ops &gt;--------</div></div>
+
+  inline void DirExplorerN::doDir(const std::string& dirname)
+  <input id = _203 type = "checkbox"><label class = "drop" for = "_203"></label><div><input id = _203 type = "checkbox"><label class = "drop" for = "_203"></label><div><input id = _203 type = "checkbox"><label class = "drop" for = "_203"></label><div>{
+    ++dirCount_;
+    std::cout &lt;&lt; "\n  ++ " &lt;&lt; dirname;
+  }</div>
+  //----&lt; return number of files processed &gt;-------------------------</div></div>
+
+  inline size_t DirExplorerN::fileCount()
+  <input id = _210 type = "checkbox"><label class = "drop" for = "_210"></label><div><input id = _210 type = "checkbox"><label class = "drop" for = "_210"></label><div><input id = _210 type = "checkbox"><label class = "drop" for = "_210"></label><div>{
+    return fileCount_;
+  }</div>
+  //----&lt; return number of directories processed &gt;-------------------</div></div>
+
+  inline size_t DirExplorerN::dirCount()
+  <input id = _216 type = "checkbox"><label class = "drop" for = "_216"></label><div><input id = _216 type = "checkbox"><label class = "drop" for = "_216"></label><div><input id = _216 type = "checkbox"><label class = "drop" for = "_216"></label><div>{
+    return dirCount_;
+  }</div>
+  //----&lt; show final counts for files and dirs &gt;---------------------</div></div>
+
+  inline void DirExplorerN::showStats()
+  <input id = _222 type = "checkbox"><label class = "drop" for = "_222"></label><div><input id = _222 type = "checkbox"><label class = "drop" for = "_222"></label><div><input id = _222 type = "checkbox"><label class = "drop" for = "_222"></label><div>{
+    std::cout &lt;&lt; "\n\n  processed " &lt;&lt; fileCount_ &lt;&lt; " files in " &lt;&lt; dirCount_ &lt;&lt; " directories";
+  }</div>
+}</div></div></div></div></div>
+    </pre>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+ToDo - CppCommWithFileXfer - 11/11/2018
+================================================
+1. Replace all old logger references with references to Singleton Logger.
+   - convert most of the std::cout writes to logger statements
+2. Provide logger wrapper with queue and thread to make logging asynchronous.
+3. Add retry wrapper for file handling.
+4. Write tests for single-user test harness in TestUtilities (not yet included here).
+5. Write DllWrapper for tests.
+6. Convert Message class to use Properties
+6. Rewrite Sockets test stub.

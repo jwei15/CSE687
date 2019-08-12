@@ -1,0 +1,69 @@
+<DOCTYPE !HTML></div></div></div>
+<html>
+  <head>
+    <Title>Shim.h</Title>
+    <style>
+      body <input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div><input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div><input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div>{
+        padding:15px 40px;
+        font-family: Consolas;
+        font-size: 1.25em;
+        font-weight: normal;
+      }</div>
+      </style></div></div>
+      <link rel="stylesheet"  href="../foldingformat.css" />
+  </head>
+
+  <body>
+    <h3>Dependencies: 
+      <a href="Interface.h.html">Interface.h</a>
+    </h3>    <pre>
+#pragma once
+
+//	Shim.h provides a class named Shim
+//	Shim class will be directively referenced by our c# WPF
+//	Shim class serves as a translator, receives a c# call 
+	//and returns c++ function results in a c# way
+
+//	Author: Jinhao Wei
+
+//#include &lt;string&gt;
+//#include &lt;iostream&gt;
+
+#include "../Interface/Interface.h"
+
+
+using namespace System;
+using namespace System::Collections::Generic;
+
+public ref class Shim <input id = _38 type = "checkbox"><label class = "drop" for = "_38"></label><div><input id = _38 type = "checkbox"><label class = "drop" for = "_38"></label><div><input id = _38 type = "checkbox"><label class = "drop" for = "_38"></label><div>{
+public:
+	Shim();
+	~Shim();
+	//bool convertFile(String^ filename);
+	List&lt;String^&gt;^ ToBeConverted(List&lt;String^&gt;^ argv);
+
+	int convert();
+	void refineConvertedFiles();
+	
+	int flag = 0;
+	void test();
+private:	
+	
+	std::string mToN(String^ str);
+	String^ nToM(const std::string& str);
+	List&lt;String^&gt;^ narrayToMarray(const std::vector&lt;std::string&gt;& str);
+	std::vector&lt;std::string&gt; marrayToNarray(List&lt;String^&gt;^ str);
+	char** std_string_vec_To_p_p_char(const std::vector&lt;std::string&gt;& str);
+	Interface* pointer_;
+	//char* testchar[] = {};
+};
+</div></div></div>
+
+public ref class ShimFactory
+<input id = _63 type = "checkbox"><label class = "drop" for = "_63"></label><div><input id = _63 type = "checkbox"><label class = "drop" for = "_63"></label><div><input id = _63 type = "checkbox"><label class = "drop" for = "_63"></label><div>{
+public:
+	static Shim^ createShim();
+};
+    </pre></div></div></div>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+<DOCTYPE !HTML></div></div></div>
+<html>
+  <head>
+    <Title>Interface.h</Title>
+    <style>
+      body <input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div><input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div><input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div>{
+        padding:15px 40px;
+        font-family: Consolas;
+        font-size: 1.25em;
+        font-weight: normal;
+      }</div>
+      </style></div></div>
+      <link rel="stylesheet"  href="../foldingformat.css" />
+  </head>
+
+  <body>
+    <pre>
+#pragma once
+
+//	Interface.h provides a class named Interface
+//	Interface class serves as the connection 
+//	All methods within this class will be implemented in IPublisher class
+//	
+
+
+
+#ifdef IN_DLL
+#define DLL_DECL __declspec(dllexport)
+#else
+#define DLL_DECL __declspec(dllimport)
+#endif
+
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;iostream&gt;
+
+class Interface <input id = _37 type = "checkbox"><label class = "drop" for = "_37"></label><div><input id = _37 type = "checkbox"><label class = "drop" for = "_37"></label><div><input id = _37 type = "checkbox"><label class = "drop" for = "_37"></label><div>{
+public:
+	//virtual void generateLoader() = 0; // pure virtual, no implementation
+	virtual bool convertFile(std::string filename) = 0;
+	virtual int convert() = 0;
+	virtual void refineConvertedFiles() = 0;
+	virtual std::vector&lt;std::string&gt; generateToBeLoaded(int argc, char** argv) = 0;
+	virtual std::vector&lt;std::string&gt; generateToBeLoaded(std::vector&lt;std::string&gt; argv) = 0;
+	virtual ~Interface() <input id = _45 type = "checkbox"><label class = "drop" for = "_45"></label><div><input id = _45 type = "checkbox"><label class = "drop" for = "_45"></label><div><input id = _45 type = "checkbox"><label class = "drop" for = "_45"></label><div>{};</div>
+};</div></div>
+</div></div></div>
+
+extern "C" <input id = _49 type = "checkbox"><label class = "drop" for = "_49"></label><div><input id = _49 type = "checkbox"><label class = "drop" for = "_49"></label><div><input id = _49 type = "checkbox"><label class = "drop" for = "_49"></label><div>{
+	struct ObjectFactory <input id = _50 type = "checkbox"><label class = "drop" for = "_50"></label><div><input id = _50 type = "checkbox"><label class = "drop" for = "_50"></label><div><input id = _50 type = "checkbox"><label class = "drop" for = "_50"></label><div>{
+		DLL_DECL Interface* createInstance(); // NOTE THAT WE HAVE NO KNOWLEDGE OF ConcreteClass HERE
+	};
+};</div></div></div></div>
+    </pre></div></div>
+  </body>
+</html>

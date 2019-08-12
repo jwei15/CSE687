@@ -1,0 +1,78 @@
+<DOCTYPE !HTML></div></div></div>
+<html>
+  <head>
+    <Title>Folding.h</Title>
+    <style>
+      body <input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div><input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div><input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div>{
+        padding:15px 40px;
+        font-family: Consolas;
+        font-size: 1.25em;
+        font-weight: normal;
+      }</div>
+      </style></div></div>
+      <link rel="stylesheet"  href="../foldingformat.css" />
+  </head>
+
+  <body>
+    <h3>Dependencies: 
+      <a href="Parser.h.html">Parser.h</a>
+      <a href="AbstrSynTree.h.html">AbstrSynTree.h</a>
+    </h3>    <pre>
+#pragma once
+<input id = _28 type = "checkbox"><label class = "drop" for = "_28"></label><div>///////////////////////////////////////////////////////////////////////////
+// Folding.h   : Package that fold up our cpp codes                      //
+// ver 1.0                                                               //
+//                                                                       // 
+// Application   : OOD-S19 Project 2                                     //
+// Platform      : Visual Studio Community 2017, Windows 10 Pro x64      //
+// Author        : Jinhao Wei                                            //
+///////////////////////////////////////////////////////////////////////////</div>
+<input id = _45 type = "checkbox"><label class = "drop" for = "_45"></label><div><input id = _45 type = "checkbox"><label class = "drop" for = "_45"></label><div><input id = _45 type = "checkbox"><label class = "drop" for = "_45"></label><div>/*
+*  Package Operations:
+* =======================
+*  This package provides a class named FoldingTool, which is responsible for folding up codes
+*  When using this package, we will first initialize the FoldingTool instance, with a parse tree
+*  Then we will use OpenFile(std::string Filename), AddDivSymbol(std::string Filename) 
+*
+*  Required Files:
+* =======================
+*  Parser.h  which gave us the information concerning where to add corresponding css/html code
+*  AbstrSynTree.h  which gave us a clear version to traverse the parse tree
+*
+*  Maintainence History:
+* =======================
+*  ver 1.0 - 20 Mar 2019
+*  - first release
+*/</div></div></div>
+
+
+
+#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+#include &lt;string&gt;
+#include "../Project2Starter/Parser/Parser.h"
+#include "../Project2Starter/AbstractSyntaxTree/AbstrSynTree.h"
+
+using namespace CodeAnalysis;
+
+class FoldingTool <input id = _58 type = "checkbox"><label class = "drop" for = "_58"></label><div><input id = _58 type = "checkbox"><label class = "drop" for = "_58"></label><div><input id = _58 type = "checkbox"><label class = "drop" for = "_58"></label><div>{
+public:
+	FoldingTool();
+	FoldingTool(ASTNode* AbstrSynTreeRoot);
+	~FoldingTool();
+
+	int containsStartComment(std::string s);
+	int containsEndComment(std::string s);
+
+	void treewalk(ASTNode* root);
+	bool AddDivSymbolToCode(std::string fileSpec);
+	bool AddDivSymbolToComment(std::string fileSpec);
+	bool OpenFile(std::string fileSpec);
+	bool WriteFile(std::string filespec);
+private:
+	ASTNode* ParseTreeRoot;
+	std::vector&lt;std::string&gt; FileBuffer;
+};
+    </pre></div></div></div>
+  </body>
+</html>

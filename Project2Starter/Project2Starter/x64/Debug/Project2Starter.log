@@ -1,0 +1,5 @@
+﻿  Semi.cpp
+  Parser.cpp
+e:\687\project2\project2starter\filesystem\filesystem.h : warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+  Generating Code...
+  Project2Starter.vcxproj -> E:\687\Project2\Project2Starter\x64\Debug\Project2Starter.exe

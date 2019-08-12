@@ -1,0 +1,104 @@
+<DOCTYPE !HTML></div>
+<html>
+  <head>
+    <Title>Converter.h</Title>
+    <style>
+      body <input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div>{
+        padding:15px 40px;
+        font-family: Consolas;
+        font-size: 1.25em;
+        font-weight: normal;
+      }</div>
+      </style>
+      <link rel="stylesheet"  href="../foldingformat.css" />
+  </head>
+
+  <body>
+    <h3>Dependencies: 
+      <a href="DependencyTable.h.html">DependencyTable.h</a>
+      <a href="AbstrSynTree.h.html">AbstrSynTree.h</a>
+      <a href="Parser.h.html">Parser.h</a>
+      <a href="ConfigureParser.h.html">ConfigureParser.h</a>
+    </h3>    <pre>
+#pragma once
+<input id = _31 type = "checkbox"><label class = "drop" for = "_31"></label><div>///////////////////////////////////////////////////////////////////////////
+// Converter.h   : defines source code conversion to webpage functions   //
+// ver 1.0                                                               //
+//                                                                       // 
+// Application   : OOD-S19 Instructor Solution                           //
+// Platform      : Visual Studio Community 2017, Windows 10 Pro x64      //
+// Author        : Ammar Salman, Syracuse University                     //
+//                 313/788-4694, assalman@syr.edu                        //
+///////////////////////////////////////////////////////////////////////////</div>
+<input id = _51 type = "checkbox"><label class = "drop" for = "_51"></label><div>/*
+*  Package Operations:
+* =======================
+*  This package defines CodeConverter class which accepts DependencyTable
+*  and uses its relationships to create linked webpages that point to each
+*  other based on dependencies. It can also convert single files if needed.
+*  The conversion process filters HTML special characters before printing
+*  them into output files. The resulting output of this converter is a list
+*  of files (vector&lt;string&gt;) of the created webpages. 
+*
+*  Required Files:
+* =======================
+*  Converter.h Converter.cpp DependencyTable.h DependencyTable.cpp
+*  Logger.h Logger.cpp FileSystem.h FileSystem.cpp
+*
+*  Maintainence History:
+* =======================
+*  ver 1.0 - 11 Feb 2019
+*  - first release
+*/</div>
+
+#include "../DependencyTable/DependencyTable.h"
+#include &lt;vector&gt;
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+
+
+#include "../Project2Starter/AbstractSyntaxTree/AbstrSynTree.h"
+#include "../Project2Starter/Parser/Parser.h"
+#include "../Project2Starter/Parser/ConfigureParser.h"
+#include "../Project2Starter/Parser/Parser.h"
+//#include "../CodePublisher/ICodePublisher.h"
+
+class CodeConverter
+<input id = _68 type = "checkbox"><label class = "drop" for = "_68"></label><div>{
+public:
+	CodeConverter();
+	CodeConverter(const DependencyTable& dt);
+
+	const std::string& outputDir() const;
+	void outputDir(const std::string& dir);
+	bool createOutpurDir();
+
+	void setDepTable(const DependencyTable& dt);
+
+	std::vector&lt;std::string&gt; convert();
+	std::string convert(const std::string& filepath);
+	std::vector&lt;std::string&gt; convert(const std::vector&lt;std::string&gt;& files);
+
+	const std::vector&lt;std::string&gt; convertedFiles() const;
+
+	void clear();
+
+	bool convertFile(std::string file);
+
+	void addPreCodeHTML(const std::string& title);
+	void addPreTag();
+	void addDependencyLinks(std::string file);
+	void addClosingTags();
+	void skipSpecialChars(std::string& line);
+
+private:
+	DependencyTable dt_;
+	std::string outputDir_ = "..\\..\\..\\..\\ConvertedWebpages\\";
+	std::vector&lt;std::string&gt; convertedFiles_;
+	std::ofstream out_;
+};
+</div>
+    </pre>
+  </body>
+</html>

@@ -1,0 +1,199 @@
+<DOCTYPE !HTML></div></div></div>
+<html>
+  <head>
+    <Title>FileMgr.h</Title>
+    <style>
+      body <input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div><input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div><input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div>{
+        padding:15px 40px;
+        font-family: Consolas;
+        font-size: 1.25em;
+        font-weight: normal;
+      }</div>
+      </style></div></div>
+      <link rel="stylesheet"  href="../foldingformat.css" />
+  </head>
+
+  <body>
+    <h3>Dependencies: 
+      <a href="IFileMgr.h.html">IFileMgr.h</a>
+      <a href="FileSystem.h.html">FileSystem.h</a>
+    </h3>    <pre>
+#ifndef FILEMGR_H
+#define FILEMGR_H
+<input id = _27 type = "checkbox"><label class = "drop" for = "_27"></label><div>/////////////////////////////////////////////////////////////////////
+// FileMgr.h - find files matching specified patterns              //
+//             on a specified path                                 //
+// ver 2.2                                                         //
+// Jim Fawcett, CSE687 - Object Oriented Design, Spring 2016       //
+/////////////////////////////////////////////////////////////////////</div>
+<input id = _64 type = "checkbox"><label class = "drop" for = "_64"></label><div><input id = _64 type = "checkbox"><label class = "drop" for = "_64"></label><div><input id = _64 type = "checkbox"><label class = "drop" for = "_64"></label><div>/*
+* Package Operations:
+* -------------------
+* This package provides a class, FileMgr, and object factory function,
+* Create().  It's mission is to search the directory tree, rooted at
+* a specified path, looking for files that match a set of specified
+* patterns.
+*
+* It provides virtual functions file(...), dir(...), and done(), which
+* an application can override to provide application specific processing
+* for the events: file found, directory found, and finished processing.
+*
+* The package also provides interface hooks that serve the same purpose
+* but allow multiple receivers for those events.
+*
+* Required Files:
+* ---------------
+*   FileMgr.h, FileMgr.cpp, IFileMgr.h, 
+*   FileSystem.h, FileSystem.cpp
+*
+* Build Process:
+* --------------
+*   devenv FileMgr.sln /rebuild debug
+*
+* Maintenance History:
+* --------------------
+* ver 2.2 : 28 Aug 2016
+* - added more prologue comments
+* ver 2.1 : 31 Jul 2016
+* - added virtual file, dir, and done functions
+* - this lets application override instead of registering for event
+* ver 2.0 : 12 Mar 2016
+* - fixes bug in directory recursion in find(path)
+* - reduces scope of for loop in find for efficiency
+* ver 1.0 : 11 Mar 2016
+* - first release
+*/</div></div></div>
+
+#include "IFileMgr.h"
+#include "../FileSystem/FileSystem.h"
+
+namespace FileManager
+<input id = _71 type = "checkbox"><label class = "drop" for = "_71"></label><div><input id = _71 type = "checkbox"><label class = "drop" for = "_71"></label><div><input id = _71 type = "checkbox"><label class = "drop" for = "_71"></label><div>{
+  class FileMgr : public IFileMgr
+  <input id = _73 type = "checkbox"><label class = "drop" for = "_73"></label><div><input id = _73 type = "checkbox"><label class = "drop" for = "_73"></label><div><input id = _73 type = "checkbox"><label class = "drop" for = "_73"></label><div>{
+  public:
+    using patterns = std::vector&lt;std::string&gt;;
+    using File = std::string;
+    using Dir = std::string;
+    using fileSubscribers = std::vector&lt;IFileEventHandler*&gt;;
+    using dirSubscribers = std::vector&lt;IDirEventHandler*&gt;;
+    using doneSubscribers = std::vector&lt;IDoneEventHandler*&gt;;
+
+    virtual ~FileMgr() <input id = _82 type = "checkbox"><label class = "drop" for = "_82"></label><div><input id = _82 type = "checkbox"><label class = "drop" for = "_82"></label><div><input id = _82 type = "checkbox"><label class = "drop" for = "_82"></label><div>{}</div>
+</div></div>
+    //----&lt; set default file pattern &gt;-------------------------------
+
+    FileMgr(const std::string& path) : path_(path)
+    <input id = _87 type = "checkbox"><label class = "drop" for = "_87"></label><div><input id = _87 type = "checkbox"><label class = "drop" for = "_87"></label><div><input id = _87 type = "checkbox"><label class = "drop" for = "_87"></label><div>{
+      patterns_.push_back("*.*");
+      pInstance_ = this;
+    }</div>
+    //----&lt; return instance of FileMgr &gt;-----------------------------</div></div>
+
+    static IFileMgr* getInstance()
+    <input id = _94 type = "checkbox"><label class = "drop" for = "_94"></label><div><input id = _94 type = "checkbox"><label class = "drop" for = "_94"></label><div><input id = _94 type = "checkbox"><label class = "drop" for = "_94"></label><div>{
+      return pInstance_;
+    }</div>
+    //----&lt; add file pattern, removing default on first call &gt;-------</div></div>
+
+    void addPattern(const std::string& patt)
+    <input id = _100 type = "checkbox"><label class = "drop" for = "_100"></label><div><input id = _100 type = "checkbox"><label class = "drop" for = "_100"></label><div><input id = _100 type = "checkbox"><label class = "drop" for = "_100"></label><div>{
+      if (patterns_.size() == 1 && patterns_[0] == "*.*")
+        patterns_.pop_back();
+      patterns_.push_back(patt);
+    }</div>
+    //----&lt; applications can overload this or reg for fileEvt &gt;------</div></div>
+
+    virtual void file(const File& f)
+    <input id = _108 type = "checkbox"><label class = "drop" for = "_108"></label><div><input id = _108 type = "checkbox"><label class = "drop" for = "_108"></label><div><input id = _108 type = "checkbox"><label class = "drop" for = "_108"></label><div>{
+      ++numFilesProcessed;
+      for (auto pEvtHandler : fileSubscribers_)
+      <input id = _111 type = "checkbox"><label class = "drop" for = "_111"></label><div><input id = _111 type = "checkbox"><label class = "drop" for = "_111"></label><div><input id = _111 type = "checkbox"><label class = "drop" for = "_111"></label><div>{
+        pEvtHandler-&gt;execute(f);
+      }</div>
+    }</div></div></div>
+    //----&lt; applications can overload this or reg for dirEvt &gt;-------</div></div>
+
+    virtual void dir(const Dir& fpath)
+    <input id = _118 type = "checkbox"><label class = "drop" for = "_118"></label><div><input id = _118 type = "checkbox"><label class = "drop" for = "_118"></label><div><input id = _118 type = "checkbox"><label class = "drop" for = "_118"></label><div>{
+      for (auto pEvtHandler : dirSubscribers_)
+      <input id = _120 type = "checkbox"><label class = "drop" for = "_120"></label><div><input id = _120 type = "checkbox"><label class = "drop" for = "_120"></label><div><input id = _120 type = "checkbox"><label class = "drop" for = "_120"></label><div>{
+        pEvtHandler-&gt;execute(fpath);
+      }</div>
+    }</div></div></div>
+    //----&lt; applications can overload this or reg for doneEvt &gt;------</div></div>
+
+    virtual void done()
+    <input id = _127 type = "checkbox"><label class = "drop" for = "_127"></label><div><input id = _127 type = "checkbox"><label class = "drop" for = "_127"></label><div><input id = _127 type = "checkbox"><label class = "drop" for = "_127"></label><div>{
+      for (auto pEvtHandler : doneSubscribers_)
+      <input id = _129 type = "checkbox"><label class = "drop" for = "_129"></label><div><input id = _129 type = "checkbox"><label class = "drop" for = "_129"></label><div><input id = _129 type = "checkbox"><label class = "drop" for = "_129"></label><div>{
+        pEvtHandler-&gt;execute(numFilesProcessed);
+      }</div>
+    }</div></div></div>
+    //----&lt; start search on previously specified path &gt;--------------</div></div>
+
+    void search()
+    <input id = _136 type = "checkbox"><label class = "drop" for = "_136"></label><div><input id = _136 type = "checkbox"><label class = "drop" for = "_136"></label><div><input id = _136 type = "checkbox"><label class = "drop" for = "_136"></label><div>{
+      find(path_);
+      done();
+    }</div>
+    //----&lt; search current path including subdirectories &gt;-----------</div></div>
+
+    void find(const std::string& path)
+    <input id = _143 type = "checkbox"><label class = "drop" for = "_143"></label><div><input id = _143 type = "checkbox"><label class = "drop" for = "_143"></label><div><input id = _143 type = "checkbox"><label class = "drop" for = "_143"></label><div>{
+      std::string fpath = FileSystem::Path::getFullFileSpec(path);
+      dir(fpath);
+      for (auto patt : patterns_)
+      <input id = _147 type = "checkbox"><label class = "drop" for = "_147"></label><div><input id = _147 type = "checkbox"><label class = "drop" for = "_147"></label><div><input id = _147 type = "checkbox"><label class = "drop" for = "_147"></label><div>{
+        std::vector&lt;std::string&gt; files = FileSystem::Directory::getFiles(fpath, patt);
+        for (auto f : files)
+        <input id = _150 type = "checkbox"><label class = "drop" for = "_150"></label><div><input id = _150 type = "checkbox"><label class = "drop" for = "_150"></label><div><input id = _150 type = "checkbox"><label class = "drop" for = "_150"></label><div>{
+          file(f);
+        }</div>
+      }</div></div></div>
+      std::vector&lt;std::string&gt; dirs = FileSystem::Directory::getDirectories(fpath);</div></div>
+      for (auto d : dirs)
+      <input id = _156 type = "checkbox"><label class = "drop" for = "_156"></label><div><input id = _156 type = "checkbox"><label class = "drop" for = "_156"></label><div><input id = _156 type = "checkbox"><label class = "drop" for = "_156"></label><div>{
+        if (d == "." || d == "..")
+          continue;
+        std::string dpath = fpath + "\\" + d;
+        find(dpath);
+      }</div>
+    }</div></div></div>
+    //----&lt; applications use this to register for notification &gt;-----</div></div>
+
+    void regForFiles(IFileEventHandler* pHandler)
+    <input id = _166 type = "checkbox"><label class = "drop" for = "_166"></label><div><input id = _166 type = "checkbox"><label class = "drop" for = "_166"></label><div><input id = _166 type = "checkbox"><label class = "drop" for = "_166"></label><div>{
+      fileSubscribers_.push_back(pHandler);
+    }</div>
+    //----&lt; applications use this to register for notification &gt;-----</div></div>
+
+    void regForDirs(IDirEventHandler* pHandler)
+    <input id = _172 type = "checkbox"><label class = "drop" for = "_172"></label><div><input id = _172 type = "checkbox"><label class = "drop" for = "_172"></label><div><input id = _172 type = "checkbox"><label class = "drop" for = "_172"></label><div>{
+      dirSubscribers_.push_back(pHandler);
+    }</div>
+    //----&lt; applications use this to register for notification &gt;-----</div></div>
+
+    void regForDone(IDoneEventHandler* pHandler)
+    <input id = _178 type = "checkbox"><label class = "drop" for = "_178"></label><div><input id = _178 type = "checkbox"><label class = "drop" for = "_178"></label><div><input id = _178 type = "checkbox"><label class = "drop" for = "_178"></label><div>{
+      doneSubscribers_.push_back(pHandler);
+    }</div>
+  private:</div></div>
+    std::string path_;
+    patterns patterns_;
+    size_t numFilesProcessed = 0;
+    fileSubscribers fileSubscribers_;
+    dirSubscribers dirSubscribers_;
+    doneSubscribers doneSubscribers_;
+    static IFileMgr* pInstance_;
+  };
+</div></div></div>
+  inline IFileMgr* FileMgrFactory::create(const std::string& path)
+  <input id = _192 type = "checkbox"><label class = "drop" for = "_192"></label><div><input id = _192 type = "checkbox"><label class = "drop" for = "_192"></label><div><input id = _192 type = "checkbox"><label class = "drop" for = "_192"></label><div>{
+    return new FileMgr(path);
+  }</div>
+}</div></div></div></div></div>
+#endif
+    </pre>
+  </body>
+</html>

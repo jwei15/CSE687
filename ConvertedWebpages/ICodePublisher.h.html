@@ -1,0 +1,62 @@
+<DOCTYPE !HTML></div></div></div>
+<html>
+  <head>
+    <Title>ICodePublisher.h</Title>
+    <style>
+      body <input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div><input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div><input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div>{
+        padding:15px 40px;
+        font-family: Consolas;
+        font-size: 1.25em;
+        font-weight: normal;
+      }</div>
+      </style></div></div>
+      <link rel="stylesheet"  href="../foldingformat.css" />
+  </head>
+
+  <body>
+    <h3>Dependencies: 
+      <a href="Loader.h.html">Loader.h</a>
+      <a href="Converter.h.html">Converter.h</a>
+    </h3>    <pre>
+#pragma once
+<input id = _25 type = "checkbox"><label class = "drop" for = "_25"></label><div>///////////////////////////////////////////////////////////////
+// INativeCpp.h - Translates managed calls into native calls //
+//                                                           //
+// Jim Fawcett, CSE687 - Object Oriented Design, Spring 2019 //
+///////////////////////////////////////////////////////////////</div>
+<input id = _42 type = "checkbox"><label class = "drop" for = "_42"></label><div><input id = _42 type = "checkbox"><label class = "drop" for = "_42"></label><div><input id = _42 type = "checkbox"><label class = "drop" for = "_42"></label><div>/*
+*  This package provides an interface for the NativeCpp class
+*  and a declaration of an object factory function.  Using these
+*  isolates the user from all implementation details in NativeCpp.
+*
+*  That will be important for projects #3 and #4.  For example,
+*  in Project #4 the WPF GUI needs to use services of the Comm
+*  channel.  Comm uses native threads, but neither C# nor C++\CLI
+*  can compile native threads, so this isolation is crucial.
+*
+*  NativeCpp doesn't do anything useful, other than illustrating
+*  how to call native C++ methods from C# via a C++\CLI translator.
+*
+*  The easiest way to use this package is to build it as a static
+*  library and the Translator project makes a reference to this
+*  project.
+*/</div></div></div>
+#include &lt;string&gt;
+#include &lt;vector&gt;
+
+#include "../Loader/Loader.h"
+#include "../Converter/Converter.h"
+
+class CodeConverter;
+class Loader;
+struct INativeCodePublisher
+<input id = _53 type = "checkbox"><label class = "drop" for = "_53"></label><div><input id = _53 type = "checkbox"><label class = "drop" for = "_53"></label><div><input id = _53 type = "checkbox"><label class = "drop" for = "_53"></label><div>{
+	INativeCodePublisher() <input id = _54 type = "checkbox"><label class = "drop" for = "_54"></label><div><input id = _54 type = "checkbox"><label class = "drop" for = "_54"></label><div><input id = _54 type = "checkbox"><label class = "drop" for = "_54"></label><div>{};</div>
+	CodeConverter Cvtr;</div></div>
+	Loader loader;	
+};
+</div></div></div>
+INativeCodePublisher* createNativeCodePublisher();
+    </pre>
+  </body>
+</html>

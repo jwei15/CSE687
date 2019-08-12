@@ -1,0 +1,133 @@
+<DOCTYPE !HTML></div>
+<html>
+  <head>
+    <Title>Parser.h</Title>
+    <style>
+      body <input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div>{
+        padding:15px 40px;
+        font-family: Consolas;
+        font-size: 1.25em;
+        font-weight: normal;
+      }</div>
+      </style>
+      <link rel="stylesheet"  href="../foldingformat.css" />
+  </head>
+
+  <body>
+    <h3>Dependencies: 
+      <a href="ITokenCollection.h.html">ITokenCollection.h</a>
+    </h3>    <pre>
+#ifndef PARSER_H
+#define PARSER_H
+<input id = _29 type = "checkbox"><label class = "drop" for = "_29"></label><div>/////////////////////////////////////////////////////////////////////
+//  Parser.h - Analyzes C++ and C# language constructs             //
+//  ver 1.0                                                        //
+//  Language:      Visual C++, Visual Studio 2015                  //
+//  Platform:      Dell XPS 8920, Windows 10                       //
+//  Application:   Prototype for CSE687 - OOD Projects             //
+//  Author:        Jim Fawcett, CST 4-187, Syracuse University     //
+//                 (315) 443-3948, jfawcett@twcny.rr.com           //
+/////////////////////////////////////////////////////////////////////</div>
+<input id = _62 type = "checkbox"><label class = "drop" for = "_62"></label><div>/*
+  Module Operations: 
+  ==================
+  This module defines a Parser class.  Its instances collect 
+  semi-expressions from one or more files for analysis.  
+  Analysis consists of applying a set of rules to the semi-expression, 
+  and for each rule that matches, invoking a set of one or more actions.
+
+  Build Process:
+  ==============
+  Required files
+    - Parser.h, Parser.cpp, 
+    - ITokenCollection.h, 
+    - Semi.h, Semi.cpp,
+    - toker.h, toker.cpp,
+    - ActionsAndRules.h, ActionsAndRules.cpp,
+    - GrammarHelpers.h, GrammarHelpers.cpp,
+    - AbstrSynTree.h, AbstrSynTree.cpp,
+    - ScopeStack.h, ScopeStack.cpp
+    - ConfigureParser.h, ConfigureParser.cpp,
+    - FileSystem.h, FileSystem.cpp,
+    - Logger.h, Logger.cpp,
+    - Utilities.h, Utilities.cpp
+
+  Maintenance History:
+  ===================
+  ver 1.0 : 11 Feb 2019
+  - first release
+  - This is a modification of the parser used in CodeAnalyzer.
+  - The most important change is replacing its tokenizer with a 
+    State Pattern based design
+
+*/</div>
+
+#include &lt;string&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include "../SemiExpression/ITokenCollection.h"
+
+namespace CodeAnalysis
+<input id = _71 type = "checkbox"><label class = "drop" for = "_71"></label><div>{
+  ///////////////////////////////////////////////////////////////
+  // abstract base class for parsing actions
+  //   - when a rule succeeds, it invokes any registered action
+
+  class Parser;
+
+  class IBuilder
+  <input id = _79 type = "checkbox"><label class = "drop" for = "_79"></label><div>{
+  public:
+    virtual ~IBuilder() <input id = _81 type = "checkbox"><label class = "drop" for = "_81"></label><div>{}</div>
+    virtual Parser* Build() = 0;
+  };
+</div>
+  ///////////////////////////////////////////////////////////////
+  // abstract base class for parsing actions
+  //   - when a rule succeeds, it invokes any registered action
+
+  class IAction
+  <input id = _90 type = "checkbox"><label class = "drop" for = "_90"></label><div>{
+  public:
+    virtual ~IAction() <input id = _92 type = "checkbox"><label class = "drop" for = "_92"></label><div>{}</div>
+    virtual void doAction(const Lexer::ITokenCollection* pTc) = 0;
+  };
+</div>
+  ///////////////////////////////////////////////////////////////
+  // abstract base class for parser language construct detections
+  //   - rules are registered with the parser for use
+
+  class IRule
+  <input id = _101 type = "checkbox"><label class = "drop" for = "_101"></label><div>{
+  public:
+    static const bool Continue = true;
+    static const bool Stop = false;
+    virtual ~IRule() <input id = _105 type = "checkbox"><label class = "drop" for = "_105"></label><div>{}</div>
+    void addAction(IAction* pAction);
+    void doActions(const Lexer::ITokenCollection* pTc);
+    virtual bool doTest(const Lexer::ITokenCollection* pTc) = 0;
+  protected:
+    std::vector&lt;IAction*&gt; actions;
+  };
+</div>
+  class Parser
+  <input id = _114 type = "checkbox"><label class = "drop" for = "_114"></label><div>{
+  public:
+    Parser(Lexer::ITokenCollection* pTokCollection);
+    ~Parser();
+    void addRule(IRule* pRule);
+    bool parse();
+    bool next();
+  private:
+    Lexer::ITokenCollection* pTokColl;
+    std::vector&lt;IRule*&gt; rules;
+  };
+</div>
+  inline Parser::Parser(Lexer::ITokenCollection* pTokCollection) : pTokColl(pTokCollection) <input id = _126 type = "checkbox"><label class = "drop" for = "_126"></label><div>{}</div>
+
+  inline Parser::~Parser() <input id = _128 type = "checkbox"><label class = "drop" for = "_128"></label><div>{}</div>
+}</div>
+#endif
+    </pre>
+  </body>
+</html>

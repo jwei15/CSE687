@@ -1,0 +1,66 @@
+<DOCTYPE !HTML></div></div></div>
+<html>
+  <head>
+    <Title>Display.h</Title>
+    <style>
+      body <input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div><input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div><input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div>{
+        padding:15px 40px;
+        font-family: Consolas;
+        font-size: 1.25em;
+        font-weight: normal;
+      }</div>
+      </style></div></div>
+      <link rel="stylesheet"  href="../foldingformat.css" />
+  </head>
+
+  <body>
+    <pre>
+#pragma once
+<input id = _26 type = "checkbox"><label class = "drop" for = "_26"></label><div>///////////////////////////////////////////////////////////////////////////
+// Display.h     : defines webpage display using browser functions       //
+// ver 1.0                                                               //
+//                                                                       // 
+// Application   : OOD-S19 Instructor Solution                           //
+// Platform      : Visual Studio Community 2017, Windows 10 Pro x64      //
+// Author        : Ammar Salman, Syracuse University                     //
+//                 313/788-4694, assalman@syr.edu                        //
+///////////////////////////////////////////////////////////////////////////</div>
+<input id = _47 type = "checkbox"><label class = "drop" for = "_47"></label><div><input id = _47 type = "checkbox"><label class = "drop" for = "_47"></label><div><input id = _47 type = "checkbox"><label class = "drop" for = "_47"></label><div>/*
+*  Package Operations:
+* =======================
+*  This package defines Display class which accepts a list of files as a
+*  vector&lt;string&gt; and uses the default internet browser to display them
+*  one by one. Please note that the functionality has limiations:
+*   1) Opera/MS Edge: will pop-up all tabs instantly. 
+*   2) Chrome/Firefox: will pop-up windows separately only if no
+*      already existing Chrome/Firefox window is opened (all must be
+*      closed before running this). 
+*
+*  Required Files:
+* =======================
+*  Display.h Display.cpp Process.h Process.cpp
+*  Logger.h Logger.cpp FileSystem.h FileSystem.cpp
+*
+*  Maintainence History:
+* =======================
+*  ver 1.0 - 14 Feb 2019
+*  - first release
+*/</div></div></div>
+
+
+#include &lt;vector&gt;
+#include &lt;string&gt;
+#include &lt;unordered_map&gt;
+
+class Display
+<input id = _56 type = "checkbox"><label class = "drop" for = "_56"></label><div><input id = _56 type = "checkbox"><label class = "drop" for = "_56"></label><div><input id = _56 type = "checkbox"><label class = "drop" for = "_56"></label><div>{
+public:
+  Display();
+  
+  void display(const std::string& file);
+  void display(const std::vector&lt;std::string&gt;& files);
+};
+</div></div></div>
+    </pre>
+  </body>
+</html>

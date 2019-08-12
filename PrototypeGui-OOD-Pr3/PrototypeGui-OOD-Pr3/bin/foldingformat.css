@@ -1,0 +1,29 @@
+/*code snippet from stack overflow*/
+/*https://stackoverflow.com/questions/37412166/how-to-make-show-hide-div-with-a-toggle-using-css*/
+
+/*I merely attempted to import the code below to my solution*/
+.drop {
+  cursor: pointer;
+  height:auto;
+  display: inline;
+  /*display: block;*/
+  background: #090;
+}
+
+input[type="checkbox"]  {
+ display: none; /* hide the checkboxes */
+}
+
+input +.drop +  div
+{
+  display:none;
+}
+.drop:after {
+  content:'+';
+  }
+:checked  + .drop:after {
+  content:'-';
+  }
+input:checked + .drop + div{
+  display:inline;
+}

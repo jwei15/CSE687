@@ -1,0 +1,88 @@
+<DOCTYPE !HTML></div></div></div>
+<html>
+  <head>
+    <Title>Executive.h</Title>
+    <style>
+      body <input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div><input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div><input id = _6 type = "checkbox"><label class = "drop" for = "_6"></label><div>{
+        padding:15px 40px;
+        font-family: Consolas;
+        font-size: 1.25em;
+        font-weight: normal;
+      }</div>
+      </style></div></div>
+      <link rel="stylesheet"  href="../foldingformat.css" />
+  </head>
+
+  <body>
+    <h3>Dependencies: 
+      <a href="Loader.h.html">Loader.h</a>
+      <a href="CodePublisher.h.html">CodePublisher.h</a>
+      <a href="Converter.h.html">Converter.h</a>
+      <a href="Folding.h.html">Folding.h</a>
+      <a href="Display.h.html">Display.h</a>
+      <a href="FileSystem.h.html">FileSystem.h</a>
+      <a href="Parser.h.html">Parser.h</a>
+      <a href="AbstrSynTree.h.html">AbstrSynTree.h</a>
+      <a href="Utilities.h.html">Utilities.h</a>
+      <a href="ActionsAndRules.h.html">ActionsAndRules.h</a>
+      <a href="ConfigureParser.h.html">ConfigureParser.h</a>
+      <a href="Logger.h.html">Logger.h</a>
+      <a href="CodeUtilities.h.html">CodeUtilities.h</a>
+    </h3>    <pre>
+#pragma once
+<input id = _39 type = "checkbox"><label class = "drop" for = "_39"></label><div>///////////////////////////////////////////////////////////////////////////
+// Folding.h   : Package that fold up our cpp codes                      //
+// ver 1.0                                                               //
+//                                                                       // 
+// Application   : OOD-S19 Project 2                                     //
+// Platform      : Visual Studio Community 2017, Windows 10 Pro x64      //
+// Author        : Jinhao Wei                                            //
+///////////////////////////////////////////////////////////////////////////</div>
+<input id = _64 type = "checkbox"><label class = "drop" for = "_64"></label><div><input id = _64 type = "checkbox"><label class = "drop" for = "_64"></label><div><input id = _64 type = "checkbox"><label class = "drop" for = "_64"></label><div>/*
+*  Package Operations:
+* =======================
+*  There is a main functin here, which is the entrance of this entire project
+*
+*  Required Files:
+* =======================
+*  Loader.h  load files(from command line) and their dependencies
+*  CodePublisher.h  
+*  Converter.h  convert files from .h or .cpp to .html
+*  Folding.h    fold up codes in .html format
+*  Display.h    show files content
+*  FileSystem.h    a overall package helps us to maintain the directories and files
+*  Parser.h     parse the files, and record informations on class definitions, etc
+*  AbstrSynTree.h   a data structure that helps us maintain the informations parsed
+*  Utilities.h   
+*  ActionsAndRules.h  defines the rules that a parse should follow, and solve the problems with actions
+*  ConfigureParser.h  build up a parser
+*  CodeUtilities.h
+
+*  Maintainence History:
+* =======================
+*  ver 1.0 - 25 Mar 2019
+*  - first release
+*/</div></div></div>
+#include "../Loader/Loader.h"
+#include "../CodePublisher/CodePublisher.h"
+#include "../Converter/Converter.h"
+#include "../Folding/Folding.h"
+#include "../Display/Display.h"
+#include "../FileSystem/FileSystem.h"
+
+#include "../Project2Starter/Parser/Parser.h"
+#include "../Project2Starter/AbstractSyntaxTree/AbstrSynTree.h"
+
+#include "../Project2Starter/Utilities/Utilities.h"
+#include "../Project2Starter/Parser/ActionsAndRules.h"
+#include "../Project2Starter/Parser/ConfigureParser.h"
+#include "../Project2Starter/Logger/Logger.h"
+
+#include "../Utilities/CodeUtilities/CodeUtilities.h"
+
+using namespace FileSystem;
+using namespace CodeAnalysis;
+using namespace Logging;
+    </pre>
+  </body>
+</html>
