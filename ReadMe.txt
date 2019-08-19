@@ -42,3 +42,14 @@ Project4_jwei15
                                |- - - - - - - - - ServerFiles
                                                         | - - 9091
                                                         | - - 9092
+                                                        
+Note: After compile.bat has been run should this run.bat fail(this usually occurs due to some privilege issues), please manually run the project by:
+    1. enter the directory 
+        NavigatorClientServer/NavigationServer/bin/Debug
+        and run NavigatorServer.exe with administrator privilege, 
+
+    2. enter the directory 
+        NavigatorClientServer/NavigatorClient/bin/Debug
+        and run NavigatorClient.exe with administrator privilege, 
+        
+    This will do a simple demo for one client and one server case
