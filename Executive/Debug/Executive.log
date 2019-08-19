@@ -1,1 +1,5 @@
-﻿
+﻿  pch.cpp
+  Executive.cpp
+e:\687_unrefined\687_unrefined\project4_jwei15\executive\executive.cpp(29): warning C4018: '<': signed/unsigned mismatch
+FileSystemDemo.lib(FileSystem.obj) : warning LNK4099: PDB 'FileSystemDemo.pdb' was not found with 'FileSystemDemo.lib(FileSystem.obj)' or at 'E:\687_unrefined\687_unrefined\Project4_jwei15\Debug\FileSystemDemo.pdb'; linking object as if no debug info
+  Executive.vcxproj -> E:\687_unrefined\687_unrefined\Project4_jwei15\Debug\Executive.exe

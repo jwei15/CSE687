@@ -1,1 +1,4 @@
-﻿
+﻿  FileSystem.cpp
+e:\687_unrefined\687_unrefined\project4_jwei15\comm\utilities\filesystem\filesystem.cpp : warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+e:\687_unrefined\687_unrefined\project4_jwei15\comm\utilities\filesystem\filesystem.h : warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+  FileSystem.vcxproj -> E:\687_unrefined\687_unrefined\Project4_jwei15\Debug\FileSystem.lib

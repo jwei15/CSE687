@@ -1,1 +1,12 @@
-﻿
+﻿cl : Command line warning D9035: option 'clr:pure' has been deprecated and will be removed in a future release
+  stdafx.cpp
+cl : Command line warning D9035: option 'clr:pure' has been deprecated and will be removed in a future release
+  AssemblyInfo.cpp
+e:\687_unrefined\687_unrefined\project4_jwei15\formwithcppthread\formwithcppthread\assemblyinfo.cpp(40): warning C4947: 'System::Security::Permissions::SecurityAction::RequestMinimum': marked as obsolete
+  e:\687_unrefined\687_unrefined\project4_jwei15\formwithcppthread\formwithcppthread\assemblyinfo.cpp(40): note: Message: 'Assembly level declarative security is obsolete and is no longer enforced by the CLR by default. See http://go.microsoft.com/fwlink/?LinkID=155570 for more information.'
+  FormWithCppThread.cpp
+  Generating Code...
+cl : Command line warning D9035: option 'clr:pure' has been deprecated and will be removed in a future release
+  .NETFramework,Version=v4.0.AssemblyAttributes.cpp
+  AssemblyInfo.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+  FormWithCppThread.vcxproj -> E:\687_unrefined\687_unrefined\Project4_jwei15\Debug\FormWithCppThread.exe

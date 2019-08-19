@@ -44,3 +44,16 @@ E:\687\Project4_jwei15\NavigatorClientServer\TestUtilities\obj\Debug\TestUtiliti
 E:\687\Project4_jwei15\NavigatorClientServer\TestUtilities\obj\Debug\TestUtilities.csproj.CopyComplete
 E:\687\Project4_jwei15\NavigatorClientServer\TestUtilities\obj\Debug\TestUtilities.exe
 E:\687\Project4_jwei15\NavigatorClientServer\TestUtilities\obj\Debug\TestUtilities.pdb
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\TestUtilities\bin\Debug\TestUtilities.exe.config
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\TestUtilities\bin\Debug\TestUtilities.exe
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\TestUtilities\bin\Debug\TestUtilities.pdb
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\TestUtilities\bin\Debug\Environment.dll
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\TestUtilities\bin\Debug\IService.dll
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\TestUtilities\bin\Debug\Environment.pdb
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\TestUtilities\bin\Debug\IService.pdb
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\TestUtilities\bin\Debug\IService.dll.config
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\TestUtilities\obj\Debug\TestUtilities.csprojAssemblyReference.cache
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\TestUtilities\obj\Debug\TestUtilities.csproj.CoreCompileInputs.cache
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\TestUtilities\obj\Debug\TestUtilities.csproj.CopyComplete
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\TestUtilities\obj\Debug\TestUtilities.exe
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\TestUtilities\obj\Debug\TestUtilities.pdb

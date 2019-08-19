@@ -24,3 +24,10 @@ E:\687\Project4_jwei15\NavigatorClientServer\IMessagePassingCommService\obj\Debu
 E:\687\Project4_jwei15\NavigatorClientServer\IMessagePassingCommService\obj\Debug\IMessagePassingCommService.csproj.CoreCompileInputs.cache
 E:\687\Project4_jwei15\NavigatorClientServer\IMessagePassingCommService\obj\Debug\IService.dll
 E:\687\Project4_jwei15\NavigatorClientServer\IMessagePassingCommService\obj\Debug\IService.pdb
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\IMessagePassingCommService\bin\Debug\IService.dll.config
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\IMessagePassingCommService\bin\Debug\IService.dll
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\IMessagePassingCommService\bin\Debug\IService.pdb
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\IMessagePassingCommService\obj\Debug\IMessagePassingCommService.csprojAssemblyReference.cache
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\IMessagePassingCommService\obj\Debug\IMessagePassingCommService.csproj.CoreCompileInputs.cache
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\IMessagePassingCommService\obj\Debug\IService.dll
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\IMessagePassingCommService\obj\Debug\IService.pdb

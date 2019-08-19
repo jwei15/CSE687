@@ -1,1 +1,16 @@
-﻿
+﻿  AbstrSynTree.cpp
+  FileSystem.cpp
+  GrammarHelpers.cpp
+  Logger.cpp
+  ScopeStack.cpp
+  Semi.cpp
+e:\687_unrefined\687_unrefined\project4_jwei15\project2starter\semiexpression\semi.cpp(367): warning C4018: '<': signed/unsigned mismatch
+  Toker.cpp
+  UtilitiesP2.cpp
+  ActionsAndRules.cpp
+  ConfigureParser.cpp
+  Executive.cpp
+  Parser.cpp
+  Generating Code...
+Executive.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+  Project2Starter.vcxproj -> E:\687_unrefined\687_unrefined\Project4_jwei15\Debug\Project2Starter.lib

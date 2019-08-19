@@ -1,1 +1,15 @@
-﻿
+﻿  pch.cpp
+c1xx : warning C4199: two-phase name lookup is not supported for C++/CLI, C++/CX, or OpenMP; use /Zc:twoPhase-
+  AssemblyInfo.cpp
+c1xx : warning C4199: two-phase name lookup is not supported for C++/CLI, C++/CX, or OpenMP; use /Zc:twoPhase-
+  Shim.cpp
+c1xx : warning C4199: two-phase name lookup is not supported for C++/CLI, C++/CX, or OpenMP; use /Zc:twoPhase-
+e:\687_unrefined\687_unrefined\project4_jwei15\shim\shim.cpp(71): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  .NETFramework,Version=v4.0.AssemblyAttributes.cpp
+c1xx : warning C4199: two-phase name lookup is not supported for C++/CLI, C++/CX, or OpenMP; use /Zc:twoPhase-
+  AssemblyInfo.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
+  AssemblyInfo.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+FileSystemDemo.lib(FileSystem.obj) : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/INCREMENTAL:NO' specification
+FileSystemDemo.lib(FileSystem.obj) : warning LNK4099: PDB 'FileSystemDemo.pdb' was not found with 'FileSystemDemo.lib(FileSystem.obj)' or at 'E:\687_unrefined\687_unrefined\Project4_jwei15\Debug\FileSystemDemo.pdb'; linking object as if no debug info
+  Shim.vcxproj -> E:\687_unrefined\687_unrefined\Project4_jwei15\Debug\Shim.dll

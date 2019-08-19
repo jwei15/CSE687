@@ -1,1 +1,5 @@
-﻿
+﻿  Cpp11-BlockingQueue.cpp
+  Logger.cpp
+  Generating Code...
+Cpp11-BlockingQueue.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+  Logger.vcxproj -> E:\687_unrefined\687_unrefined\Project4_jwei15\Debug\Logger.lib

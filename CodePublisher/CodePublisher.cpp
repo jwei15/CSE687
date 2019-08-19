@@ -11,9 +11,11 @@
 
 #include "../Loader/Loader.h"
 #include "CodePublisher.h"
-#include "../../Project2Starter/Logger/Logger.h"
+//#include "../../Project2Starter/Logger/Logger.h"
+#include "../Project2Starter/Logger/Logger.h"
+#include "../Project2Starter/Parser/ConfigureParser.h"
 //#include "../Logger/Logger.h"
-#include "./ConfigureParser.h"
+//#include "./ConfigureParser.h"
 
 
 

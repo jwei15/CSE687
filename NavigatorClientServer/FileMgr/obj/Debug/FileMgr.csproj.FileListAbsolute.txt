@@ -32,3 +32,13 @@ E:\687\Project4_jwei15\NavigatorClientServer\FileMgr\obj\Debug\FileMgr.csproj.Co
 E:\687\Project4_jwei15\NavigatorClientServer\FileMgr\obj\Debug\FileMgr.csproj.CopyComplete
 E:\687\Project4_jwei15\NavigatorClientServer\FileMgr\obj\Debug\FileMgr.exe
 E:\687\Project4_jwei15\NavigatorClientServer\FileMgr\obj\Debug\FileMgr.pdb
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\FileMgr\bin\Debug\FileMgr.exe.config
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\FileMgr\bin\Debug\FileMgr.exe
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\FileMgr\bin\Debug\FileMgr.pdb
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\FileMgr\bin\Debug\Environment.dll
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\FileMgr\bin\Debug\Environment.pdb
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\FileMgr\obj\Debug\FileMgr.csproj.CoreCompileInputs.cache
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\FileMgr\obj\Debug\FileMgr.csproj.CopyComplete
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\FileMgr\obj\Debug\FileMgr.exe
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\FileMgr\obj\Debug\FileMgr.pdb
+E:\687_unrefined\687_unrefined\Project4_jwei15\NavigatorClientServer\FileMgr\obj\Debug\FileMgr.csprojAssemblyReference.cache
